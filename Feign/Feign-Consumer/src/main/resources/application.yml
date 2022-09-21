@@ -1,0 +1,18 @@
+server:
+  port: 9080
+
+spring:
+  application:
+    name: FeignConsumer
+
+eureka:
+  client:
+    service-url:
+      #向eureka1点发起请求
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
+  healthcheck:
+    enabled: true
+  instance:
+    #查找主机
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}

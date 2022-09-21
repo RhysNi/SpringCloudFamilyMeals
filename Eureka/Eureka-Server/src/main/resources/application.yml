@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: eureka2
+  application:
+    name: EurekaServer
+  #安全认证
+  security:
+    user:
+      name: RhysNi
+      password: 123456
+
+eureka:
+  server:
+    #自我保护机制
+    enable-self-preservation: true
+
+
+#server:
+#  port: 7901
+#
+#eureka:
+#  client:
+#    service-url:
+#      #自我注册
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      #是否将自己注册到其他Eureka Server,默认为true
+##      register-with-eureka: true
+#    #是否从eureka server获取注册信息
+#  #    fetch-registry: true
+#  instance:
+#    #查找主机
+#    hostname: eureka1.com
+
+
+

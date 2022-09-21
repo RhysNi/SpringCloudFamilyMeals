@@ -1,0 +1,42 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: EurekaConsumer
+
+eureka:
+  client:
+    service-url:
+      #向eureka1点发起请求
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
+  healthcheck:
+    enabled: true
+  instance:
+    #查找主机
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+
+#针对EurekaProvider服务定ribbon策略
+EurekaProvider:
+    ribbon:
+      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#ribbon:
+#  eureka:
+#    #脱离Eureka，不会再从Eureka去获取服务列表
+#    enabled: false
+#  #让Ribbon使用这个服务列表做负载均衡
+#  listOfServers: localhost:8080,localhost:8081,localhost:8082
+
+
+
