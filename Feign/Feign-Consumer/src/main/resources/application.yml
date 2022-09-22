@@ -9,10 +9,27 @@ eureka:
   client:
     service-url:
       #向eureka1点发起请求
-      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
   healthcheck:
     enabled: true
   instance:
     #查找主机
     hostname: localhost
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+
+#针对EFeignProvider服务定ribbon策略
+FeignProvider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+
+ribbon:
+  #连接超时(ms)
+  ConnectTimout: 1000
+  #逻辑响应超时(ms)
+  ReadTimout: 3000
+  #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetries: 1
+  #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1
+  #是否所有操作都重试
+  OkToRetryOnAllOperations: false

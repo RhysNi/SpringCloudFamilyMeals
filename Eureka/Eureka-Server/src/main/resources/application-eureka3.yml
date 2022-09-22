@@ -1,15 +1,15 @@
 server:
-  port: 7902
+  port: 7903
 
 eureka:
   client:
     service-url:
       #向eureka1节点发起请求
-      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/
     #是否将自己注册到其他Eureka Server,默认为true
     register-with-eureka: true
     #是否从eureka server获取注册信息
     fetch-registry: true
   instance:
-    hostname: eureka2.com
+    hostname: eureka3.com
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}

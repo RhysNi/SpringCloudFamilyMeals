@@ -5,7 +5,7 @@ eureka:
   client:
     service-url:
       #向eureka2节点发起请求
-      defaultZone: http://RhysNi:123456@eureka2.com:7902/eureka/
+      defaultZone: http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
     #是否将自己注册到其他Eureka Server,默认为true
     register-with-eureka: true
     #是否从eureka server获取注册信息
