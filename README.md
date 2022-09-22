@@ -1779,6 +1779,80 @@ public class FeignConsumerController {
 
 <img src="https://i0.hdslb.com/bfs/album/9757877fe4098a36c711d54b05dc737ebf15a543.png" alt="image-20220921051749918" style="zoom:200%;" />
 
+#### 超时案例
+
+> 在`Feign-Consumer`服务调用方模块中添加如下配置
+
+```yaml
+ribbon:
+  #连接超时(ms)
+  ConnectTimout: 1000
+  #逻辑响应超时(ms)
+  ReadTimout: 3000
+```
+
+> 我们模拟一下超时场景，在`FeignProviderController`中让这个接口睡上5秒
+
+```java
+@RestController
+public class FeignProviderController implements ServiceApi {
+    private AtomicInteger requestCount = new AtomicInteger();
+
+    @Value("${server.port}")
+    private String port;
+
+    @Override
+    public String pingFeignProvider() {
+        try {
+            System.out.println("开始模拟超时");
+            TimeUnit.MILLISECONDS.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+        return "Ping Feign Provider Port:" + port + " Success Count:"+requestCount.incrementAndGet();
+    }
+}
+```
+
+> 我们配置的逻辑响应超时是3s，所以当`Feign-Consumer`调用`Feign-Provider`的`/pingFeignProvider`接口时就会认为接口响应超时了
+
+![image-20220922114222007](https://i0.hdslb.com/bfs/album/308f579908e4427badb62be7ef4ea094bfec6b5b.png)
+
+> Ribbon对于超时还有重试机制，比如咱们起的`Feign-Provider`服务为多实例，Ribbon则会基于负载均衡对其余节点依次执行重试机制
+
+#### 重试机制
+
+> 关于重试机制也是有配置项可配的，一起来看看怎么配
+>
+> - Feign默认支持Ribbon
+> - Ribbon的重试机制和Feign的重试机制有冲突，所以源码中默认关闭Feign的重试机制,使用Ribbon的重试机制
+>
+> - ribbon重试机制，请求失败后，每6秒会重新尝试
+
+```yaml
+ribbon:
+  #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetries: 1
+  #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1
+  #是否所有操作都重试
+  OkToRetryOnAllOperations: false
+```
+
+> 注意,接下来启动服务才是本次演示讲究的地方
+>
+> - 用`睡眠`的那套代码启动一个实例
+> - 在注释掉`睡眠`代码，启动两个实例
+> - 总共三个实例，模拟Ribbon的重试和`服务降级`（非熔断降级），这边降级意思就是重试一定次数后，在`一定时间内`（一般6秒）就不会再去调这个服务节点，6秒后再有请求过来会再次尝试去调用该服务节点
+
+<img src="https://i0.hdslb.com/bfs/album/d10d49c9f239352b0d9eb7e431062ba876bce1e3.gif" alt="20220923_033735_edit(1)(1)" style="zoom:200%;" />
+
+> 最后再调用`Feign-Consumer`的`/testOpenFeign`接口
+>
+> - 可以看到每次调用到`超时`的节点时都会进行一次重试，一共是调用两次该接口，所以控制台每次都会打印两行`模拟重试的提示信息`，在重试还是失败的情况下会去调用其他节点进行重试，如果其他节点调用成功则返回
+
+![20220923_044253(1)](https://i0.hdslb.com/bfs/album/3c1b91f2a042eefc38b0f5ce9d69d43794a344cc.gif)
+
 ### Hystrix
 
 > 熔断降级，防止服务雪崩。
