@@ -1598,10 +1598,10 @@ ribbon:
 
 <img src="https://i0.hdslb.com/bfs/album/0988224ff570597a2862d4ed14693eafa8cc97c0.png" alt="image-20220921040927354" style="zoom:200%;" />
 
-> 新建`ServiceApi`接口，暴露一个`/serviceApi/pingFeignProvider`
+> 新建`ServiceApi`接口，暴露一个`/pingFeignProvider`
 
 ```java
-@RequestMapping("/serviceApi")
+@RequestMapping("")
 public interface ServiceApi {
     
     @GetMapping("/pingFeignProvider")
@@ -1666,7 +1666,7 @@ eureka:
 >
 > 那有兄弟要问了："这样的话我如果想像以前一样直接调用这个接口该怎么调用呢？"
 >
-> - http://localhost:9090/serviceApi/pingFeignProvider 这样就可以了，照常调用就可以了，接口路径保持`ServiceApi`中的路径相同即可
+> - http://localhost:9090/pingFeignProvider 这样就可以了，照常调用就可以了，接口路径保持`ServiceApi`中的路径相同即可
 
 ```java
 @RestController
@@ -1856,6 +1856,322 @@ ribbon:
 ### Hystrix
 
 > 熔断降级，防止服务雪崩。
+>
+> - 实现了 超时机制和断路器模式
+> - 用于隔离远程系统、服务或者第三方库，防止级联失败，从而提升系统的可用性与容错性。
+>   - 为系统提供保护机制。在依赖的服务出现高延迟或失败时，为系统提供保护和控制。
+>   - 防止雪崩。
+>   - 包裹请求：使用HystrixCommand（或HystrixObservableCommand）包裹对依赖的调用逻辑，每个命令在独立线程中运行。
+>   - 跳闸机制：当某服务失败率达到一定的阈值时，Hystrix可以自动跳闸，停止请求该服务一段时间。
+>   - 资源隔离：Hystrix为每个请求都的依赖都维护了一个小型线程池，如果该线程池已满，发往该依赖的请求就被立即拒绝，而不是排队等候，从而加速失败判定。防止级联失败。
+>   - 快速失败：Fail Fast。同时能快速恢复。侧重点是：（不去真正的请求服务，发生异常再返回），而是直接失败。
+>   - 监控：Hystrix可以实时监控运行指标和配置的变化，提供近实时的监控、报警、运维控制。
+>   - 回退机制：fallback，当请求失败、超时、被拒绝，或当断路器被打开时，执行回退逻辑。回退逻辑我们自定义，提供优雅的服务降级。
+>   - 自我修复：断路器打开一段时间后，会自动进入“半开”状态，可以进行打开，关闭，半开状态的转换。前面有介绍。
+
+#### 降级
+
+> 向服务方发起请求，判断连接超时
+>
+> - 将这次请求记录到服务
+> - 尝试向其他服务器发起请求，还是没有请求成功
+> - catch异常
+>   - 可以返回重试页面，提供重试入口
+>   - 返回提示信息
+
+#### 隔离
+
+> **线程隔离（限流）**
+>
+> 每发起一个Http请求都会开一个独立线程去处理业务，涉及到了线程消耗的问题，为了避免造成线程任务积压
+>
+> - 当线程数达到线程池线程数上限的时候直接抛出异常，后面来的任务全部不处理，只处理之前还没处理完的请求，这叫隔离/限流
+
+#### 熔断
+
+> 我们在向服务方发起请求失败了，给连续失败次数计数
+>
+> - 达到阈值的时候抛出异常进入异常处理逻辑
+
+#### 依赖集成
+
+> 在`Feign-Consume`服务请求方添加如下依赖
+
+```xml
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+</dependency>
+```
+
+#### 举个例子🌰
+
+##### 直接使用
+
+> new `HystrixTest`类，继承`HystrixCommand`抽象类，实现`run`、`getFallback`方法
+
+```java
+public class HystrixTest extends HystrixCommand {
+    public static void main(String[] args) {
+        Future<String> future = new HystrixTest(HystrixCommandGroupKey.Factory.asKey("doProcess")).queue();
+        String reslut = "";
+        try {
+            reslut = future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("reslut:" + reslut);
+    }
+
+
+    @Override
+    protected Object run() throws Exception {
+        System.out.println("开始执行...");
+        //制造异常场景，都知道1/0在java中会抛出ArithmeticException（算术异常）对吧
+        int i = 1 / 0;
+        return "执行成功...";
+    }
+
+    /**
+     * 备用逻辑
+     *
+     * @return java.lang.Object
+     * @author Rhys.Ni
+     * @date 2022/9/26
+     */
+    @Override
+    protected Object getFallback() {
+        return "异常了，走到了getFallback逻辑";
+    }
+
+  	//有很多种构造函数，我们只需要一种就可以了
+    public HystrixTest(HystrixCommandGroupKey group) {
+        super(group);
+    }
+}
+```
+
+> 运行从结果可以看出程序进了`run`方法并执行算法抛出了异常，那么异常了程序后续该怎么执行呢？
+
+<img src="https://i0.hdslb.com/bfs/album/2ffc7c01adfab0c6830e9be30b837bc16f6f0468.png" alt="image-20220926012316920" style="zoom:200%;" />
+
+> 当程序抛出异常时则会进入备用逻辑`getFallback`方法中，成功执行了备用方法里面的逻辑
+
+<img src="https://i0.hdslb.com/bfs/album/cc171b4f67c506ebcaa8a0d419666c6da39b695d.png" alt="image-20220926012517392" style="zoom:200%;" />
+
+#### Feign整合Hystrix
+
+##### Fallback
+
+> 在`Feign-Consumer`服务`application.yml`配置文件中添加以下配置
+>
+> - 默认是关闭的
+
+```yaml
+feign:
+  hystrix:
+    enabled: true
+```
+
+> new `FeignProviderBack`类，实现`FeignConsumerApi`接口，将接口内所有方法都重新实现一遍，这种形式的降级策略就是针对于每一个独立请求的降级
+
+```java
+@Component
+public class FeignProviderBack implements FeignConsumerApi {
+
+    @Override
+    public String pingFeignProvider() {
+        return "降级了,返回了兜底数据";
+    }
+}
+```
+
+>  在`@FeignClient`注解中添加属性`fallback = FeignProviderBack.class`
+
+```java
+@FeignClient(name = "FeignProvider",fallback = FeignProviderBack.class)
+public interface FeignConsumerApi extends ServiceApi {
+}
+```
+
+> 在`ServiceApi`中有一点需要注意
+>
+> - 不能在类上加`@RequestMapping`注解，否则启动的时候会`重复`创建两次`相同的方法`并`且抛异常启动失败`
+
+<img src="https://i0.hdslb.com/bfs/album/07d35f3dbce7fe0a8a1809d3c57ca25f3853ce8d.png" alt="image-20220926020502535" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/7e2e6e9ad7afa92ed8d4117d2cb14631afad5c19.png" alt="image-20220926020407320" style="zoom:200%;" />
+
+> 因此，我们需要去掉这个注解
+
+<img src="https://i0.hdslb.com/bfs/album/28b587de4ebb30df2e4ef23f2a45dfe286d84047.png" alt="image-20220926020606456" style="zoom:200%;" />
+
+> 我们调用一下`http://localhost:9080/testOpenFeign`接口
+>
+> - 可以看到确实走进了`FeignProviderBack`中的降级逻辑
+
+<img src="https://i0.hdslb.com/bfs/album/c64acf8c0b10ec51314020618519a98c7557f553.png" alt="image-20220926021731825" style="zoom:200%;" />
+
+##### FallbackFactory
+
+>  在`@FeignClient`注解中替换属性`fallback = FeignProviderBack.class`为`fallbackFactory = FeignProviderBackFactory.class`
+
+```java
+@FeignClient(name = "FeignProvider",fallbackFactory = FeignProviderBackFactory.class)
+public interface FeignConsumerApi extends ServiceApi {
+}
+```
+
+> new `FeignProviderBackFactory`类，实现`FallbackFactory`接口
+>
+> - 这边可以针对具体业务的Api使用,这里我针对`FeignConsumerApi`来使用
+
+```java
+public class FeignProviderBackFactory implements FallbackFactory<FeignConsumerApi> {
+    @Override
+    public FeignConsumerApi create(Throwable throwable) {
+        return new FeignConsumerApi() {
+            @Override
+            public String pingFeignProvider() {
+                return "FallbackFactory 实现降级了,返回了兜底数据";
+            }
+        };
+    }
+}
+```
+
+> 重启`Feign-Consumer`服务，再次调用`http://localhost:9080/testOpenFeign`接口
+>
+> - 可以看到也是生效了的
+
+<img src="https://i0.hdslb.com/bfs/album/c0f2c77981d64756d9ec80552e93960fcea5ae42.png" alt="image-20220926022802974" style="zoom:200%;" />
+
+> 除此以外我们还可以根据异常类型进行判断执行不同的处理逻辑
+
+```java
+@Component
+public class FeignProviderBackFactory implements FallbackFactory<FeignConsumerApi> {
+    @Override
+    public FeignConsumerApi create(Throwable throwable) {
+        return new FeignConsumerApi() {
+            @Override
+            public String pingFeignProvider() {
+                if (throwable instanceof RuntimeException) {
+                    return "请求时异常：" + throwable;
+                } else {
+                    return "FallbackFactory 实现降级了,返回了兜底数据";
+                }
+            }
+        };
+    }
+}
+```
+
+#### RestTenplate整合Hystrix
+
+> - 在启动类`FeignConsumerApplication`加上`@EnableCircuitBreaker`注解支持`Hystrix`
+>   - 有的兄弟可能会问那刚刚Feign集成Hystrix的时候为什么没加这个注解也可以实现？
+>     - 因为Feign默认支持Hystrix，只需要在配置文件中控制配置开关即可
+> - 在启动类声明`RestTemplate`为单例Bean
+
+```java
+@EnableFeignClients
+@EnableCircuitBreaker
+@SpringBootApplication
+public class FeignConsumerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FeignConsumerApplication.class, args);
+    }
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+```
+
+> new `TestRestService`类
+>
+> - @HystrixCommand(defaultFallback = "testFallBack")
+>   - testFallBack为方法名，所以要新增方法`testFallBack`
+
+```java
+@Service
+public class TestRestService {
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @HystrixCommand(defaultFallback = "testFallBack")
+    public String testOpenFeignWithRest() {
+        String url = "http://FeignProvider/pingFeignProvider";
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            String result = responseEntity.getBody();
+            return result;
+        } else {
+            return "Bad Request";
+        }
+    }
+
+    private String testFallBack() {
+        return "@HystrixCommand 实现了降级，返回了兜底数据";
+    }
+}
+```
+
+> `FeignConsumerController`中新增接口`/testOpenFeignWithRest`
+>
+> - 注入`TestRestService`服务
+
+```java
+@RestController
+public class FeignConsumerController {
+    @Resource
+    private FeignConsumerApi feignConsumerApi;
+
+    @Resource
+    private TestRestService restService;
+
+    @GetMapping("/testOpenFeign")
+    public String testOpenFeign() {
+        return feignConsumerApi.pingFeignProvider();
+    }
+
+    @GetMapping("/testOpenFeignWithRest")
+    public Object testOpenFeignWithRest() {
+        return restService.testOpenFeignWithRest();
+    }
+}
+```
+
+> 重启服务调用`/testOpenFeignWithRest`接口
+
+```http
+http://localhost:9080/testOpenFeignWithRest
+```
+
+> sa
+
+<img src="https://i0.hdslb.com/bfs/album/4065ad78c3f05d2cbc56462079fb08cc1e50a5b6.png" alt="image-20220926030209425" style="zoom:200%;" />
+
+#### 线程隔离&信号量隔离
+
+> 默认情况下hystrix使用线程池控制请求隔离
+>
+> - 线程池隔离技术，是用 Hystrix 自己的线程去执行调用；
+> - 信号量隔离技术，是直接让 tomcat 线程去调用依赖服务
+>   - 信号量隔离,只是一道关卡,信号量有多少,就允许多少个 tomcat 线程通过它,然后去执行
+>   - 信号量隔离主要维护的是Tomcat的线程，不需要内部线程池，更加轻量级。
+
+##### 配置
+
+```yaml
+
+```
 
 ### Zuul
 

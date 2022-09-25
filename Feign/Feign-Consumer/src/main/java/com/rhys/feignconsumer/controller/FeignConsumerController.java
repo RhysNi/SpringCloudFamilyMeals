@@ -1,6 +1,7 @@
 package com.rhys.feignconsumer.controller;
 
 import com.rhys.feignconsumer.service.FeignConsumerApi;
+import com.rhys.feignconsumer.service.TestRestService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,16 @@ public class FeignConsumerController {
     @Resource
     private FeignConsumerApi feignConsumerApi;
 
+    @Resource
+    private TestRestService restService;
+
     @GetMapping("/testOpenFeign")
     public String testOpenFeign() {
         return feignConsumerApi.pingFeignProvider();
+    }
+
+    @GetMapping("/testOpenFeignWithRest")
+    public Object testOpenFeignWithRest() {
+        return restService.testOpenFeignWithRest();
     }
 }
