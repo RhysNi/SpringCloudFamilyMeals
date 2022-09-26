@@ -2163,14 +2163,143 @@ http://localhost:9080/testOpenFeignWithRest
 > 默认情况下hystrix使用线程池控制请求隔离
 >
 > - 线程池隔离技术，是用 Hystrix 自己的线程去执行调用；
+>
+>   ![image-20220926102847104](https://i0.hdslb.com/bfs/album/8f10e6a92daecb842e64851b7c7a0d82a9454ccf.png)
+>
 > - 信号量隔离技术，是直接让 tomcat 线程去调用依赖服务
 >   - 信号量隔离,只是一道关卡,信号量有多少,就允许多少个 tomcat 线程通过它,然后去执行
 >   - 信号量隔离主要维护的是Tomcat的线程，不需要内部线程池，更加轻量级。
+>   
+>   ![image-20220926104124397](https://i0.hdslb.com/bfs/album/85b00f3f486fdb8631e717b8ce10d4c14730ad3d.png)
 
-##### 配置
+##### 监控线程池隔离
+
+###### 开启dashboard
+
+> 在`Feign-Consumer`服务调用方添加如下依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+> 在`Feign-Consumer`启动类添加`@EnableHystrixDashboard`注解
+
+```java
+@EnableFeignClients
+@EnableCircuitBreaker
+@EnableHystrixDashboard
+@SpringBootApplication
+public class FeignConsumerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FeignConsumerApplication.class, args);
+    }
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+```
+
+> 在`Feign-Consumer`配置文件`application.yml`中添加以下配置开启所有端点
 
 ```yaml
+#开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
+#配置主机地址白名单
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "localhost"
+```
+
+> - 重启`Feign-Consumer`服务，打开图形监控页面
+
+```http
+localhost:9080/hystrix
+```
+
+> 输入监控上报接口地址
+
+```http
+http://localhost:9080/actuator/hystrix.stream
+```
+
+![image-20220926123305957](https://i0.hdslb.com/bfs/album/31896daef1cae4b72034dcecef6ed94512ec63c4.png)
+
+![image-20220926115845228](https://i0.hdslb.com/bfs/album/4794c71e37cf67c3d72aff253bc1fe4bd7c8021e.png)
+
+> 进入页面后得调用其他接口让数据进行统计，让页面`动起来`
+>
+> `Pool Size`：线程池大小，有多少个线程
+
+![soogif(3)](D:\安装包\soogif(3).gif)
+
+##### 监控信号量隔离
+
+> 想要在`dashboard`中监控信号量隔离状态，需要在配置文件中修改隔离策略配置
+>
+> - 默认`Thread`策略,  `Thread`｜`Semaphore`
+> - `Thread` 通过`线程数量`来限制并发请求数，可以提供`额外的保护`，但有一定的`延迟`。一般用于网络调用
+> - `SEMAPHORE` 通过`Semaphore Count`来限制并发请求数，适用于`无网络`的`高并发`请求
+
+##### 隔离策略配置
+
+```yaml
+hystrix:
+  #隔离策略配置
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: Semaphore
+```
+
+> 重启再次刷新页面，调用其他接口增加信息上报数据流动
+>
+> 因为我们这次切换成了`SEMAPHORE`信号量隔离，可以看到`Thread Pools`栏里是没有相关信息数据的
+
+![image-20220926153443448](https://i0.hdslb.com/bfs/album/43b69cd1441ea62828dfa66f98a5745c0a862877.png)
+
+##### 其他配置
+
+```yaml
+hystrix:
+  dashboard:
+    #配置主机地址白名单
+    proxy-stream-allow-list: "localhost"
+  #隔离策略配置
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: Semaphore
+          thread:
+            #命令执行超时时间，默认1000ms
+            timeoutInMilliseconds: 1000
+            #发生超时是是否中断
+            interruptOnTimeout: true
+          semaphore:
+            #最大并发请求数
+            #默认10，该参数当使用ExecutionIsolationStrategy.SEMAPHORE策略时才有效
+            #如果达到最大并发请求数，请求会被拒绝
+            #理论上选择semaphore size的原则和选择thread size一致
+            #但选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread
+            maxConcurrentRequests: 10
+        #执行是否启用超时，默认启用true
+        timeout:
+          enabled: true
 ```
 
 ### Zuul

@@ -37,3 +37,36 @@ ribbon:
 feign:
   hystrix:
     enabled: true
+
+#开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+hystrix:
+  dashboard:
+    #配置主机地址白名单
+    proxy-stream-allow-list: "localhost"
+  #隔离策略配置
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: Semaphore
+#          thread:
+#            #命令执行超时时间，默认1000ms
+#            timeoutInMilliseconds: 1000
+#            #发生超时是是否中断
+#            interruptOnTimeout: true
+#          semaphore:
+#            #最大并发请求数
+#            #默认10，该参数当使用ExecutionIsolationStrategy.SEMAPHORE策略时才有效
+#            #如果达到最大并发请求数，请求会被拒绝
+#            #理论上选择semaphore size的原则和选择thread size一致
+#            #但选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread
+#            maxConcurrentRequests: 10
+#        #执行是否启用超时，默认启用true
+#        timeout:
+#          enabled: true
