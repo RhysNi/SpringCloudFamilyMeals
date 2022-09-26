@@ -2,6 +2,7 @@ package com.rhys.feignconsumer.controller;
 
 import com.rhys.feignconsumer.service.FeignConsumerApi;
 import com.rhys.feignconsumer.service.TestRestService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +21,12 @@ public class FeignConsumerController {
     @Resource
     private TestRestService restService;
 
+    @Value("${server.port}")
+    private String port;
+
     @GetMapping("/testOpenFeign")
     public String testOpenFeign() {
-        return feignConsumerApi.pingFeignProvider();
+        return "Consumer:" + port + "-" + feignConsumerApi.pingFeignProvider();
     }
 
     @GetMapping("/testOpenFeignWithRest")

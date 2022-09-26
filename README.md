@@ -653,7 +653,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: "*"
 ```
 
 <img src="https://i0.hdslb.com/bfs/album/d6fedc7d4ad4a666e00d1cb407f53ca793212065.png" alt="image-20220916015040443" style="zoom:200%;" />
@@ -2216,7 +2216,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: "*"
 
 #配置主机地址白名单
 hystrix:
@@ -2304,7 +2304,144 @@ hystrix:
 
 ### Zuul
 
-> 网关路由，提供路由转发、请求过滤、限流降级等功能。
+> 网关路由，提供路由转发、请求过滤、限流降级等功能
+>
+> Zuul是Netflix开源的微服务网关，核心是一系列过滤器。这些过滤器可以完成以下功能
+>
+> - 作为所有微服务入口，进行请求分发
+> - 可以集成身份认证与安全。识别合法的请求，拦截不合法的请求
+> - 可在入口处监控，信息更全面
+> - 动态路由，动态将请求分发到不同的后端集群
+> - 压力测试,可以逐渐增加对后端服务的流量，进行测试
+> - 负载均衡（ribbon）
+> - 限流（望京超市）。比如我每秒只要1000次，10001次就不让访问了
+> - 服务熔断
+
+#### 举个例子🌰
+
+> 创建新项目`Zuul`
+
+<img src="https://i0.hdslb.com/bfs/album/30322704d5eb818bd24b04ab6df5a9f0ac975e6a.png" alt="image-20220926235806097" style="zoom:200%;" /> 
+
+> 添加依赖
+
+<img src="https://i0.hdslb.com/bfs/album/d08c8e978a8200adbfd9fff435e91013096e3b5f.png" alt="image-20220927000322346" style="zoom:200%;" />
+
+> 修改`POM`文件中`spring-boot.version`和`spring-cloud.version`
+
+```xml
+<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+```
+
+> 在启动类添加`@EnableZuulProxy`注解
+
+```java
+@EnableZuulProxy
+@SpringBootApplication
+public class ZuulApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ZuulApplication.class, args);
+    }
+}
+```
+
+> 添加`application.yml`
+
+```yaml
+# 应用名称
+spring:
+  application:
+    name: ZuulServer
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      #向eureka节点发起注册请求
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
+  healthcheck:
+    enabled: true
+  instance:
+    #查找主机
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+```
+
+> 由于我们`FeignConsumer`起了多实例，我们需要对`Feign-Consumer`服务中的`/testOpenFeign`接口稍加改造，加上调用端口输出，方便我们观察负载均衡策略是否生效,在`FeignConsumerController`添加`server.port`配置读取
+
+```java
+    @Value("${server.port}")
+    private String port;
+
+    @GetMapping("/testOpenFeign")
+    public String testOpenFeign() {
+        return "Consumer:" + port + "-" + feignConsumerApi.pingFeignProvider();
+    }
+```
+
+> 在正式开始动手之前我们再来思考一个问题，在上文中涉及的调用都是由一台`Xxx-Consumer`去调用多台`Xxx-Provider`，所以我们可以直接使用Feign/Ribbon去做负载均衡，那如果我现在`Xxx-Consumer`也要启动多实例，我们该怎么对多实例`Consumer`服务做负载均衡呢？
+>
+> - 这也正是`Zuul`存在的意义了,因为Zuul默认集成了 ribbon 和 hystrix对吧，所以可以直接通过`Zuul`网关对下游服务层做负载均衡和熔断
+
+<img src="https://i0.hdslb.com/bfs/album/42a7681b83eb8fa4b0b12b8638f48a5223cde3b8.png" alt="image-20220927032815307" style="zoom:200%;" />
+
+> - 启动三个`Eureka-Server`
+> - 启动三个`Feign-Provider`
+> - 启动三个`Feign-Consumer`
+> - 访问`http://localhost:7901/`查看服务列表是否所有启动的应用都注册到了`Eureka`
+
+<img src="https://i0.hdslb.com/bfs/album/22a9db31c966485fdafbdede7fb23409c3410359.png" alt="image-20220927025606743" style="zoom:200%;" />
+
+> 原来我们调用`Feign-Consumer`服务中的`/testOpenFeign`接口需要指定具体的`ip:port/api`才能匹配到对应URL，现在有了`Zuul`网关调用接口只需要`网关ip:port/serviceId/api`
+>
+> 📢注意：这里有一个`坑点`一不小心就会导致请求失败，返回`404 Not Found`
+>
+> - `zuul`会把你注册在注册中心的`serviceId`,例如我们这边的`FeignConsumer` 自动的转成小写去路由。所有我们需要把请求的http路径中`serviceId`转成小写如下
+
+```http
+localhost:8888/feignconsumer/testOpenFeign
+```
+
+> 可以看到成功从`ZuulServer`分发请求到下游`Feign-Consumer`服务，负载均衡也体现出来了
+
+<img src="https://i0.hdslb.com/bfs/album/30ec7f0587435a85302c492b710d79bdc3d5591b.gif" alt="20220927_033255_edit" style="zoom:200%;" />
+
+#### 服务路由配置
+
+##### 指定微服务访问路径
+
+###### 通过服务名配置
+
+> 在配置文件中加入以下配置
+
+```yaml
+zuul:
+  routes:
+    FeignConsumer: /testFC/**
+```
+
+> 重启`ZuulServer`测试
+>
+> - 将`localhost:8888/feignconsumer/testOpenFeign`替换成`localhost:8888/testFC/testOpenFeign`
+
+<img src="https://i0.hdslb.com/bfs/album/73c6810112bea26b566fe23b428e3bee2531450c.png" alt="image-20220927035058453" style="zoom:200%;" />
+
+##### 请求前缀
+
+> 添加以下配置
+>
+> - 请求时需将`/api/v1`加在URL前方`localhost:8888/testFC/testOpenFeign`改为`localhost:8888/api/v1/testFC/testOpenFeign`
+
+```yaml
+zuul:
+  #请求前缀
+  prefix: /api/v1
+  #是否带上前缀请求
+  strip-prefix: true
+```
 
 ### Sleuth
 
