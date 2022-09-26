@@ -2070,7 +2070,7 @@ public class FeignProviderBackFactory implements FallbackFactory<FeignConsumerAp
 }
 ```
 
-#### RestTenplate整合Hystrix
+#### RestTemplate整合Hystrix
 
 > - 在启动类`FeignConsumerApplication`加上`@EnableCircuitBreaker`注解支持`Hystrix`
 >   - 有的兄弟可能会问那刚刚Feign集成Hystrix的时候为什么没加这个注解也可以实现？
