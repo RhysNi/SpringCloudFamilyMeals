@@ -1261,7 +1261,7 @@ http://eureka1.com:7901/eureka/status
 >
 > - 先按照RoundRobinRule(轮询)的策略获取服务，如果获取的服务失败则在指定的时间会进行重试，进行获取可用的服务。如多次获取某个服务失败，就不会再次获取该服务。主要是在一个时间段内，如果选择一个服务不成功，就继续找可用的服务，直到超时
 
-#### 代码演示
+#### 举个例子🌰
 
 ##### 负载均衡
 
@@ -1962,9 +1962,9 @@ public class HystrixTest extends HystrixCommand {
 
 <img src="https://i0.hdslb.com/bfs/album/cc171b4f67c506ebcaa8a0d419666c6da39b695d.png" alt="image-20220926012517392" style="zoom:200%;" />
 
-#### Feign整合Hystrix
+##### Feign整合Hystrix
 
-##### Fallback
+###### Fallback
 
 > 在`Feign-Consumer`服务`application.yml`配置文件中添加以下配置
 >
@@ -2015,7 +2015,7 @@ public interface FeignConsumerApi extends ServiceApi {
 
 <img src="https://i0.hdslb.com/bfs/album/c64acf8c0b10ec51314020618519a98c7557f553.png" alt="image-20220926021731825" style="zoom:200%;" />
 
-##### FallbackFactory
+###### FallbackFactory
 
 >  在`@FeignClient`注解中替换属性`fallback = FeignProviderBack.class`为`fallbackFactory = FeignProviderBackFactory.class`
 
@@ -2070,7 +2070,7 @@ public class FeignProviderBackFactory implements FallbackFactory<FeignConsumerAp
 }
 ```
 
-#### RestTemplate整合Hystrix
+##### RestTemplate整合Hystrix
 
 > - 在启动类`FeignConsumerApplication`加上`@EnableCircuitBreaker`注解支持`Hystrix`
 >   - 有的兄弟可能会问那刚刚Feign集成Hystrix的时候为什么没加这个注解也可以实现？
@@ -2244,7 +2244,7 @@ http://localhost:9080/actuator/hystrix.stream
 >
 > `Pool Size`：线程池大小，有多少个线程
 
-![soogif(3)](D:\安装包\soogif(3).gif)
+<img src="https://i0.hdslb.com/bfs/album/8d961f9e3ee11651cbc2ef9e8da1135aca92f382.gif" alt="soogif(3)(1)" style="zoom:200%;" />
 
 ##### 监控信号量隔离
 
@@ -2317,7 +2317,7 @@ hystrix:
 > - 限流（望京超市）。比如我每秒只要1000次，10001次就不让访问了
 > - 服务熔断
 
-#### 举个例子🌰
+#### 网关搭建
 
 > 创建新项目`Zuul`
 
@@ -2447,7 +2447,95 @@ zuul:
 
 > 服务链路追踪
 
-### Admin
+#### 集成案例
+
+> 在每个需要监控的服务中添加一下依赖，我们这里就在`Feign-Consumer`和`Feign-Provider`服务中添加相关依赖
+>
+> - sleuth是Spring cloud的分布式追踪解决方案
+> - zipkin是twitter开源的分布式跟踪系统，收集系统的时序数据，从而追踪微服务架构中系统延时等问题，可以通过界面更加友好的展现给用户
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-sleuth</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-zipkin</artifactId>
+</dependency>
+```
+
+> 在上述两个服务`application.yml`中添加配置
+
+```yaml
+spring:
+  #zipkin
+  zipkin:
+    base-url: http://localhost:9411/
+  #采样比例1
+  sleuth:
+    sampler:
+      rate: 1
+```
+
+> 到这里代码层面的已经简单配置好了，我们还需要去下载一个`zipkin`的`jar`包，因为`Zipkin`的管理界面不是跑在我们微服务应用中的，是需要他官网的`zipkin.jar`独立运行在服务器中的
+
+##### zipkin下载
+
+> jar包我已经下载下来传到CSDN了,复制以下链接进行下载（免积分）
+>
+> - 如果是Linux系统的也可以用他官网的`curl -sSL https://zipkin.io/quickstart.sh | bash -s`脚本在命令行执行即可下载
+
+```http
+https://download.csdn.net/download/weixin_44977377/86723976
+```
+
+> 启动`Zipkin`
+
+```shell
+java -jar zipkin.jar
+```
+
+<img src="https://i0.hdslb.com/bfs/album/d6528be608f62d30cacbcf24ba5465c80edd9ac7.png" alt="image-20220927193354990" style="zoom:200%;" />
+
+> 然后再重启我们的`Feign-Consumer`和`Feign-Provider`服务调用`localhost:8888/api/v1/testFC/testOpenFeign`接口，这个接口是走的`Zuul`网关`别搞错了`
+>
+> - 会在被调用控制台看到多出以下信息出来，那这个一串信息代表什么呢？
+> - 【服务名，traceId,spanId,是否向zipkin上报信息】
+
+<img src="https://i0.hdslb.com/bfs/album/5cac05efc51e86543ef90853114f2d12b17ac5ef.png" alt="image-20220927162731497" style="zoom:200%;" />
+
+> 调用完成后我们可以访问`Zipkin`来查看调用链路了
+
+<img src="https://i0.hdslb.com/bfs/album/e3ea089b0cba0dfa0cb7cf3909f92b71f010cebd.png" alt="image-20220927194402983" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/715d49142baaf6bd19525e8f8ac94929035a245d.png" alt="image-20220927195211619" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/6e7f90d1149784ffdf3c49f9141176df8320e3ed.png" alt="image-20220927194531052" style="zoom:200%;" />
+
+> 再看看调用出错是什么样子的，我们把`Feign-Provider`服务的`FeignProviderController`中`/pingFeignProvider`接口模拟超时的代码放开
+
+```java
+public String pingFeignProvider() {
+    try {
+        System.out.println("开始模拟超时");
+        TimeUnit.MILLISECONDS.sleep(5000);
+    } catch (InterruptedException e) {
+        throw new RuntimeException();
+    }
+    return "Ping Feign Provider Port:" + port + " Success Count:"+requestCount.incrementAndGet();
+}
+```
+
+> 重启`Feign-Provider`服务再次调用`localhost:8888/api/v1/testFC/testOpenFeign`接口
+
+![image-20220927195324220](https://i0.hdslb.com/bfs/album/41544675c20cbf952462f72223305e133ad00210.png)
+
+> 可以清晰看到调用信息和耗时所在
+
+<img src="https://i0.hdslb.com/bfs/album/5b003450ea07e06635db20258dc8eaed6c3a6e58.png" alt="image-20220927195438917" style="zoom:200%;" />
+
+### Admind
 
 > 健康管理
 

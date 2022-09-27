@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: FeignConsumer
+  #zipkin
+  zipkin:
+    base-url: http://localhost:9411/
+  #采样比例1
+  sleuth:
+    sampler:
+      rate: 1
+
 
 eureka:
   client:
@@ -54,7 +62,7 @@ hystrix:
     default:
       execution:
         isolation:
-          strategy: Semaphore
+          strategy: SEMAPHORE
 #          thread:
 #            #命令执行超时时间，默认1000ms
 #            timeoutInMilliseconds: 1000
