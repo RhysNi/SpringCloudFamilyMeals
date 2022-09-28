@@ -25,6 +25,7 @@
         <module>Eureka</module>
         <module>Feign</module>
         <module>Zuul</module>
+        <module>Admin</module>
     </modules>
 
 </project>

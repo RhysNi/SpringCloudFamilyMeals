@@ -10,6 +10,8 @@ eureka:
     register-with-eureka: true
     #是否从eureka server获取注册信息
     fetch-registry: true
+    healthcheck:
+      enabled: true
   instance:
     hostname: eureka3.com
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}

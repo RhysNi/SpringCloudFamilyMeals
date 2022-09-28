@@ -257,7 +257,7 @@ spring:
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://eureka1.com:7901/eureka/
 
 ```
@@ -905,7 +905,7 @@ spring:
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
 ```
 
@@ -1640,7 +1640,7 @@ spring:
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
   healthcheck:
     enabled: true
@@ -1702,7 +1702,7 @@ spring:
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
   healthcheck:
     enabled: true
@@ -2174,7 +2174,7 @@ http://localhost:9080/testOpenFeignWithRest
 
 ##### 监控线程池隔离
 
-###### 开启dashboard
+###### 监控线程池隔离开启dashboard
 
 > 在`Feign-Consumer`服务调用方添加如下依赖
 
@@ -2446,6 +2446,8 @@ zuul:
 ### Sleuth
 
 > 服务链路追踪
+>
+> - 跟踪每个请求，中间请求经过哪些微服务，请求耗时，网络延迟，业务逻辑耗时等。我们就能更好地分析系统瓶颈、解决系统问题。
 
 #### 集成案例
 
@@ -2453,6 +2455,10 @@ zuul:
 >
 > - sleuth是Spring cloud的分布式追踪解决方案
 > - zipkin是twitter开源的分布式跟踪系统，收集系统的时序数据，从而追踪微服务架构中系统延时等问题，可以通过界面更加友好的展现给用户
+>   - 收集系统的时序数据，从而追踪微服务架构中系统延时等问题
+>   - 由Collector、Storage、Restful API、Web U（采集器，存储器，接口，UI）四个部分组成
+>   - sleuth 收集跟踪信息通过http请求发送给zipkin 服务，zipkin将跟踪信息存储（默认内存存储，可以用mysql，ES等存储）
+>   - 提供RESTful API接口，zipkin ui通过调用api进行数据展示，
 
 ```xml
 <dependency>
@@ -2471,6 +2477,7 @@ zuul:
 spring:
   #zipkin
   zipkin:
+  	#微服务会收集信息上报到这个地址
     base-url: http://localhost:9411/
   #采样比例1
   sleuth:
@@ -2538,6 +2545,109 @@ public String pingFeignProvider() {
 ### Admind
 
 > 健康管理
+
+#### 依赖集成
+
+> 创建`Admin`工程
+
+<img src="https://i0.hdslb.com/bfs/album/a84697d5e99288d7cadcedde06b9ad0d5fe2c918.png" alt="image-20220928105329659" style="zoom:200%;" />
+
+> 选择`codecentric Spring Boot Admin`依赖
+
+<img src="https://i0.hdslb.com/bfs/album/794f20d734808b17befbb23dba7c898829f8ffe2.png" alt="image-20220928110311680" style="zoom:200%;" />
+
+> 除了上面的依赖我们还需要手动引一`Admin可视化页面`依赖
+
+```xml
+<!-- Admin可视化页面 -->
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-server-ui</artifactId>
+</dependency>
+```
+
+> 别忘记修改`POM`文件中`spring-boot.version`
+
+```xml
+<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+```
+
+> 在`Admin`工程的启动类添加`@EnableAdminServer`注解
+
+```java
+@EnableAdminServer
+@SpringBootApplication
+public class AdminApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(AdminApplication.class, args);
+    }
+}
+```
+
+> 修改`Admin`的`application.yml`配置文件
+
+```yaml
+# 应用名称
+spring:
+  application:
+    name: AdminServer
+    
+server:
+  port: 9999
+```
+
+> 接下来到我们需要接入的微服务工程中添加以下依赖，还是在`Feign-Consumer`和`Feign-Provider`工程里操作，对了`Eureka-Server`也是要做同样的操作
+>
+> 还有一个`actuator`依赖在[监控线程池隔离](#开启dashboard)的那部分我们已经集成过了，如果没有集成的话可以添加如下依赖
+
+```xml
+<!-- Spring Boot Admin 客户端-->
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-client</artifactId>
+    <version>2.2.1</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+    <version>2.3.12.RELEASE</version>
+</dependency>
+```
+
+> 添加了`actuator`依赖后还需要在`Feign-Consumer`、`Feign-Provider`、`Eureka-Server`的`application.yml`配置文件中添加以下配置
+>
+> 🔈注意：我们从工程创建开始后续添加的依赖都是`增量配置`，有些配置其实在前面实战中已经配置好了，需要注意新增依赖的`格式缩进`是否合法
+
+```yaml
+spring:
+  boot:
+    admin:
+      client:
+      	#Springboot Admin的信息上报地址
+        url: http://localhost:9999
+
+eureka:
+  client:
+    #开启健康检查
+    healthcheck:
+      enabled: true
+      
+#开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+```
+
+> 重启/启动所有相关服务，进入`http://localhost:9999`
+>
+> - 
+
+<img src="https://i0.hdslb.com/bfs/album/cf97b1f08c110de82fb971704d530898819a6690.png" alt="image-20220928162348960" style="zoom:200%;" />
 
 ### Config
 

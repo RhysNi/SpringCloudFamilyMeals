@@ -9,7 +9,7 @@ server:
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
   instance:
     #查找主机

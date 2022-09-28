@@ -1,5 +1,5 @@
 server:
-  port: 9091
+  port: 9092
 
 spring:
   application:
@@ -11,12 +11,16 @@ spring:
   sleuth:
     sampler:
       rate: 1
-
+  boot:
+    admin:
+      client:
+        #Springboot Admin的信息上报地址
+        url: http://localhost:9999
 
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
   healthcheck:
     enabled: true
@@ -24,3 +28,13 @@ eureka:
     #查找主机
     hostname: localhost
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+
+#开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

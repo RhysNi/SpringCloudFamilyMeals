@@ -6,17 +6,21 @@ spring:
     name: FeignConsumer
   #zipkin
   zipkin:
+    #zipkin的信息上报地址
     base-url: http://localhost:9411/
   #采样比例1
   sleuth:
     sampler:
       rate: 1
-
-
+  boot:
+    admin:
+      client:
+        #Springboot Admin的信息上报地址
+        url: http://localhost:9999
 eureka:
   client:
     service-url:
-      #向eureka1点发起请求
+      #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
   healthcheck:
     enabled: true
@@ -52,6 +56,9 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 hystrix:
   dashboard:
@@ -68,13 +75,10 @@ hystrix:
 #            timeoutInMilliseconds: 1000
 #            #发生超时是是否中断
 #            interruptOnTimeout: true
-#          semaphore:
-#            #最大并发请求数
-#            #默认10，该参数当使用ExecutionIsolationStrategy.SEMAPHORE策略时才有效
-#            #如果达到最大并发请求数，请求会被拒绝
-#            #理论上选择semaphore size的原则和选择thread size一致
-#            #但选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread
-#            maxConcurrentRequests: 10
+          #该参数当使用ExecutionIsolationStrategy.SEMAPHORE策略时才有效
+          semaphore:
+#            #最大并发请求数,默认10,如果达到最大并发请求数，请求会被拒绝,选用semaphore时每次执行的单元要比较小且执行速度快（ms级别）
+            maxConcurrentRequests: 10
 #        #执行是否启用超时，默认启用true
 #        timeout:
-#          enabled: true
+#          enabled: false
