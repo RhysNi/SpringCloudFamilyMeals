@@ -1,35 +1,28 @@
 server:
-  port: 9092
+  port: 7777
 
+# 应用名称
 spring:
   application:
-    name: FeignProvider
-  #zipkin
-  zipkin:
-    base-url: http://localhost:9411/
-  #采样比例1
-  sleuth:
-    sampler:
-      rate: 1
-  boot:
-    admin:
-      client:
-        #Springboot Admin的信息上报地址
-        url: http://localhost:9999
+    name: ConfigCenter
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/RhysNi/Config-Center.git
+      label: main
 
 eureka:
   client:
     service-url:
       #向eureka发起注册请求
       defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
-  healthcheck:
-    enabled: true
   instance:
     #查找主机
     hostname: localhost
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
 
-#开启所有Actuator Web访问端口
+# Actuator Web 访问端口
 management:
   endpoints:
     web:

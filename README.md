@@ -2210,7 +2210,7 @@ public class FeignConsumerApplication {
 > 在`Feign-Consumer`配置文件`application.yml`中添加以下配置开启所有端点
 
 ```yaml
-#开启所有端点
+#开启所有Actuator Web访问端口
 management:
   endpoints:
     web:
@@ -2631,7 +2631,7 @@ eureka:
     healthcheck:
       enabled: true
       
-#开启所有端点
+#开启所有Actuator Web访问端口
 management:
   endpoints:
     web:
@@ -2725,7 +2725,7 @@ mail:
 
 > 紧接着邮箱就会收到一封相关节点下线的告警通知
 
-<img src="https://i0.hdslb.com/bfs/album/4430091fc04543eab138e80b039b89a5f6795929.png" alt="image-20220929011745940" style="zoom:200%;" />
+<img src="https://i0.hdslb.com/bfs/album/e3a72d65625bb72949b88c575bad73b42ff98593.png" alt="image-20220929023841870" style="zoom:200%;" />
 
 #### [钉钉告警](https://open.dingtalk.com/document/group/custom-robot-access)
 
@@ -2805,7 +2805,7 @@ public class DingDingMessageSender {
 
 > - 新建一个`DingDingNotifier `通知类继承`AbstractStatusChangeNotifier`
 > - 实现`doNotify`方法
-> - `系统服务告警`替换成你自定义的关键词，如没自定义则不需要改
+> - 代码中`系统服务告警`替换成你自定义的关键词，如没自定义则不需要改
 
 ```java
 public class DingDingNotifier extends AbstractStatusChangeNotifier {
@@ -2848,7 +2848,120 @@ public class AdminApplication {
 
 ### Config
 
-> 配置中心，分布式配置管理。
+> - 单体应用，配置写在配置文件中，切换环境时可以切换不同的配置文件
+>
+> - 微服务中成百上千的服务比较多，配置很多，需要集中管理不同环境的配置，需要动态调整配置参数，更改配置不停服。
+
+#### 配置中心组成
+
+> 分布式配置中心包括3个部分：
+>
+> - git ：存放配置的地方，存放本地文件等。
+>
+> - config 服务端: 从git读取配置。
+>
+> - config客户端：是config服务端的客户端消费配置。
+
+<img src="https://i0.hdslb.com/bfs/album/1354d9d71a8212c96bee6d9b50ac78cb50715365.png" alt="image-20220929041458411" style="zoom:200%;" />
+
+#### GitHub仓库搭建<img src="https://i0.hdslb.com/bfs/album/dc3def30fa605f52149e188248ca9469840b19d4.png" alt="image-20220929025639343" style="zoom:200%;" />
+
+> 拉取配置中心到本地IDEA
+
+<img src="https://i0.hdslb.com/bfs/album/aa4e45057c126a51d381b05d3d9c40eacc0a05b7.png" alt="image-20220929025943771" style="zoom:200%;" />
+
+> 贴入刚创建的仓库地址进行克隆
+
+<img src="https://i0.hdslb.com/bfs/album/e01dd81126040357f29f9384760d53806ac6b367.png" alt="image-20220929030425911" style="zoom:200%;" />
+
+> 克隆完成在工程中添加`dev`、`test`、`uat`、`prod`四个配置文件
+
+<img src="https://i0.hdslb.com/bfs/album/4ef503eedbcb5c9fc2fe6212ff2974693e51fbe7.png" alt="image-20220929033509002" style="zoom:200%;" />
+
+> 提交到远程仓库
+
+<img src="https://i0.hdslb.com/bfs/album/13d86de1fdf2168ea747f3c13b1c0ea0925cd616.png" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/c6034089a583507bb708b3844de92fe6437543dc.png" alt="image-20220929033920767" style="zoom:200%;" />
+
+#### 配置中心搭建
+
+> 创建`Config-Center`工程
+
+<img src="https://i0.hdslb.com/bfs/album/bda0352800cf1baf878599100bfc161c58d73b03.png" alt="image-20220929030703019" style="zoom:200%;" />
+
+>  添加以下依赖
+
+<img src="https://i0.hdslb.com/bfs/album/b91a6f66db5e1f7d689b8674f9e28137030be259.png" style="zoom:200%;" />
+
+> 修改`pom`中`spring-boot.version`和`spring-cloud.version`
+
+```xml
+<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+```
+
+> `ConfigCenter`服务启动类添加`@EnableConfigServer`注解标识为配置中心服务
+
+```java
+@EnableConfigServer
+@SpringBootApplication
+public class ConfigCenterApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigCenterApplication.class, args);
+    }
+}
+```
+
+> 在`Config-Center`服务的`application.yml`配置文件中添加以下配置
+
+```yaml
+server:
+  port: 7777
+
+# 应用名称
+spring:
+  application:
+    name: ConfigCenter
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/RhysNi/Config-Center.git
+      label: main
+
+eureka:
+  client:
+    service-url:
+      #向eureka发起注册请求
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
+  instance:
+    #查找主机
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+
+# Actuator Web 访问端口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+```
+
+> 启动`Eureka-Server`和`Config-Center`服务测试能否读取到远程配置文件
+
+```http
+http://localhost:7777/main/feign-consumer-dev.yml
+```
+
+> 经测试是可以正常读取到的
+
+<img src="https://i0.hdslb.com/bfs/album/afe22b173f78c98a199afb370d45bfe64b362765.png" alt="image-20220929040738399" style="zoom:200%;" />
+
+
 
 ## SpringCloud Alibaba
 

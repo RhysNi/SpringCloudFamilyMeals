@@ -12,7 +12,7 @@ spring:
     admin:
       client:
         #Springboot Admin的信息上报地址
-        url: http://RhysNi:123456@localhost:9999
+        url: http://localhost:9999
 
 eureka:
   server:
@@ -20,7 +20,7 @@ eureka:
     enable-self-preservation: true
 
 
-#开启所有端点
+#开启所有Actuator Web访问端口
 management:
   endpoints:
     web:
