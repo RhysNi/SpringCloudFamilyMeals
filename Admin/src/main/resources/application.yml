@@ -1,9 +1,36 @@
+server:
+  port: 9999
+
 # 应用名称
 spring:
   application:
     name: AdminServer
+  boot:
+    admin:
+      notify:
+        mail:
+          to: 1138596996@qq.com
+          from: 1138596996@qq.com
+  #  security:
+#    user:
+#      name: RhysNi
+#      password: 123456
+  # 邮件设置
 
-server:
-  port: 9999
+  mail:
+    host: smtp.qq.com
+    username: 1138596996
+    password: fvuhkgnkbxstiied
+    properties:
+      mail:
+        smpt:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+
+
 
 

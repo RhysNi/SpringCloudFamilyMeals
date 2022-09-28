@@ -914,15 +914,14 @@ eureka:
 ```java
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
-		http.csrf().disable();
-		super.configure(http);
-	}
-
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        successHandler.setTargetUrlParameter("redirectTo");
+        http.headers().frameOptions().disable();
+        http.csrf().disable().authorizeRequests().antMatchers("/actuator/**").permitAll().anyRequest().authenticated().and().httpBasic();
+    }
 }
 ```
 
@@ -1547,7 +1546,7 @@ curl --location --request GET 'http://localhost:8090/consumer/testLBConfig'
 
 <img src="https://i0.hdslb.com/bfs/album/a3b9297a664778f251c01b70ec51debefe1179bf.gif" alt="20220920_013825_edit" style="zoom:200%;" />
 
-##### Ribbon脱离Eureka
+##### Ribbon独立使用
 
 > 如果我们不想从Eureka去自动拉取服务注册列表，那我们也可以手动配置好各个节点的`host:port`，也是可以实现负载均的
 >
@@ -2542,11 +2541,11 @@ public String pingFeignProvider() {
 
 <img src="https://i0.hdslb.com/bfs/album/5b003450ea07e06635db20258dc8eaed6c3a6e58.png" alt="image-20220927195438917" style="zoom:200%;" />
 
-### Admind
+### Spring Boot Admin
 
 > 健康管理
 
-#### 依赖集成
+#### 举个例子🌰
 
 > 创建`Admin`工程
 
@@ -2643,11 +2642,209 @@ management:
       show-details: always
 ```
 
-> 重启/启动所有相关服务，进入`http://localhost:9999`
+> 重启/启动所有相关服务
 >
-> - 
 
-<img src="https://i0.hdslb.com/bfs/album/cf97b1f08c110de82fb971704d530898819a6690.png" alt="image-20220928162348960" style="zoom:200%;" />
+<img src="https://i0.hdslb.com/bfs/album/4c85b5ac53d946d18a2283640ec8fb2f623c4b64.png" alt="image-20220928215036276" style="zoom:200%;" />
+
+> 进入`http://localhost:9999`
+
+<img src="https://i0.hdslb.com/bfs/album/ec4539017b12ec3fc77b331724ddead1b40345c5.png" alt="image-20220928215121348" style="zoom:200%;" />
+
+> - 这里可以查看JVM、端点接口查看等，其实就是把我们最开始提到的那些[端点接口](#Api端点功能)的数据可视化了
+> - 关于Admin可视化具体的功能可以自己挨个点了看看，研究一下
+
+![20220928_232457_edit(1)](https://i0.hdslb.com/bfs/album/61b5e4ba8f4b19181aa7ed0e049a4d68a7d9a88d.gif)
+
+#### 邮件告警
+
+> 在`Admin`服务引入`mail`依赖
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+
+> 在`Admin`服务的配置文件中添加以下关于邮箱的配置
+
+```yaml
+spring:
+  application:
+    name: AdminServer
+  boot:
+    admin:
+      notify:
+        mail:
+          to: 1138596996@qq.com
+          from: 1138596996@qq.com
+          
+# 邮件设置
+mail:
+	#发送协议
+  host: smtp.qq.com
+  username: 1138596996
+  #授权码
+  password: 看下方获取步骤
+  properties:
+    mail:
+      smpt:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+```
+
+> 点击`设置 -> 账户`
+
+<img src="https://i0.hdslb.com/bfs/album/0187b24a9a72452979d0dec658187f33166785e8.png" alt="image-20220929012219702" style="zoom:200%;" />
+
+> 找到`POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务`，开启`POP3/SMTP服务`
+>
+> - SMTP发信
+> - POP3收信
+
+<img src="https://i0.hdslb.com/bfs/album/56c0d21ba108771b83db4ee9b645f97e8ccb1b88.png" alt="image-20220929004400495" style="zoom:200%;" />
+
+> 发送短信验证
+
+<img src="https://i0.hdslb.com/bfs/album/94d63bc168bd5fb16c3f9e47f0cfc21258ec3102.png" alt="image-20220929004506256" style="zoom:200%;" />
+
+> 验证成功会给一个授权码，把这个授权码配到配置中`password`配置项
+
+<img src="https://i0.hdslb.com/bfs/album/cea82746c8638b5a02ef4be613b12df65f06801e.png" alt="image-20220929004720177" style="zoom:200%;" />
+
+> 有好兄弟问：到这就结束了吗？
+>
+> - 是的，只要配置一下就可以了，这也是最简单的配置方法
+> - 重启`Admin`服务，然后我们在服务列表中随便停掉一个/多个服务看看会发生什么
+> - 我这里将`Feign-Provider`的其中一个节点停掉了
+
+<img src="https://i0.hdslb.com/bfs/album/55680dc26748d906b261c441d6ca6a5cf937a77f.png" alt="image-20220929011628488" style="zoom:200%;" />
+
+> 紧接着邮箱就会收到一封相关节点下线的告警通知
+
+<img src="https://i0.hdslb.com/bfs/album/4430091fc04543eab138e80b039b89a5f6795929.png" alt="image-20220929011745940" style="zoom:200%;" />
+
+#### [钉钉告警](https://open.dingtalk.com/document/group/custom-robot-access)
+
+> 首先我们先操作钉钉获取一个`Token`
+
+<img src="https://i0.hdslb.com/bfs/album/2fff13522650b9176954e51184e0b0117c1e97ae.png" alt="image-20220929015714981" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/1c90298e507dc815a4d3afb1fdf8640dc47b0b0b.png" alt="image-20220929015757492" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/c286d4b76bb7e47e819390395e7e170d6cf76188.png" alt="image-20220929015836095" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/7ab782320bee027647438f5497ad02f157199652.png" alt="image-20220929015907542" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/bcbb656e9ebb918b64be765f561a76a268c13f59.png" alt="image-20220929015954597" style="zoom:200%;" />
+
+> `关键词`非常重要，可以记录一下，待会儿咱们要用到
+
+<img src="https://i0.hdslb.com/bfs/album/7ad927cc51817bdd9c67f3d169505f971cd0f70e.png" alt="image-20220929020147716" style="zoom:200%;" />
+
+> 复制该链接，自己保存好，下面流程要用到
+
+<img src="https://i0.hdslb.com/bfs/album/401c08e8d8475b48ed763f7ab906882a04e3364f.png" alt="image-20220929020325295" style="zoom:200%;" />
+
+> 新建`Message`和`Content`两个实体类
+
+```java
+@Data
+@AllArgsConstructor
+public class Content {
+    private String content;
+}
+```
+
+```java
+@Data
+@Builder
+public class Message {
+    private String msgtype;
+    private Content text;
+}
+```
+
+> 新建`DingDingMessageSender`发送类
+
+```java
+public class DingDingMessageSender {
+    public static void sendTextMessage(String msg) {
+        try {
+            URL url = new URL("替换成刚才钉钉生成的链接");
+            // 建立 http 连接
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Charset", "UTF-8");
+            conn.setRequestProperty("Content-Type", "application/Json; charset=UTF-8");
+            conn.connect();
+
+            OutputStream out = conn.getOutputStream();
+            String textMessage = JSONObject.toJSONString(Message.builder().msgtype("text").text(new Content(msg)).build());
+            byte[] textMessageBytes = textMessage.getBytes();
+            out.write(textMessageBytes);
+            out.flush();
+            out.close();
+
+            InputStream in = conn.getInputStream();
+            byte[] data = new byte[in.available()];
+            in.read(data);
+            System.out.println(new String(data));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+> - 新建一个`DingDingNotifier `通知类继承`AbstractStatusChangeNotifier`
+> - 实现`doNotify`方法
+> - `系统服务告警`替换成你自定义的关键词，如没自定义则不需要改
+
+```java
+public class DingDingNotifier extends AbstractStatusChangeNotifier {
+
+    @Override
+    protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
+        String serviceName = instance.getRegistration().getName();
+        String serviceUrl = instance.getRegistration().getServiceUrl();
+        String status = instance.getStatusInfo().getStatus();
+        Map<String, Object> details = instance.getStatusInfo().getDetails();
+        return Mono.fromRunnable(() -> DingDingMessageSender.sendTextMessage("系统服务告警 : 【" + serviceName + "】" + "【服务地址】" + serviceUrl + "【状态】" + status + "【详情】" + JSONObject.toJSONString(details)));
+    }
+
+    public DingDingNotifier(InstanceRepository repository) {
+        super(repository);
+    }
+}
+```
+
+> 在`Admin`的启动类中将`DingDingNotifier`通知类声明为`Bean`交由`Spring`管理
+
+```java
+@EnableAdminServer
+@SpringBootApplication
+public class AdminApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(AdminApplication.class, args);
+    }
+
+    @Bean
+    public DingDingNotifier dingDingNotifier(InstanceRepository repository){
+        return new DingDingNotifier(repository);
+    }
+}
+```
+
+> 重启`Admin`服务，再次操作服务下线，这时邮件和钉钉应该都可以收到服务下线告警了
+
+<img src="https://i0.hdslb.com/bfs/album/9127995d7411073f19a76106bded269b0f851ee3.png" alt="image-20220929023122573" style="zoom:200%;" />
 
 ### Config
 
@@ -2656,3 +2853,6 @@ management:
 ## SpringCloud Alibaba
 
 ## SpringCloud Apatch
+
+
+
