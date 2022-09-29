@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 7778
 
 # 应用名称
 spring:
@@ -10,7 +10,14 @@ spring:
       server:
         git:
           uri: https://github.com/RhysNi/Config-Center.git
-      label: main
+      label: dev
+
+  #RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 eureka:
   client:

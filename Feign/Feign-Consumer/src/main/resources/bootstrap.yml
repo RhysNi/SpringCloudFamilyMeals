@@ -17,6 +17,25 @@ spring:
       client:
         #Springboot Admin的信息上报地址
         url: http://localhost:9999
+  cloud:
+    config:
+      #通过URL方式查找配置中心
+#      uri: http://localhost:7777/
+      #通过注册中心查找
+      discovery:
+        enabled: true
+        service-id: ConfigCenter
+      profile: dev
+      label: dev
+      #文件名
+      name: feign-consumer
+  #RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 eureka:
   client:
     service-url:
@@ -34,6 +53,7 @@ FeignProvider:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
 
+#负载均衡配置
 ribbon:
   #连接超时(ms)
   ConnectTimout: 1000
@@ -46,6 +66,7 @@ ribbon:
   #是否所有操作都重试
   OkToRetryOnAllOperations: false
 
+#开启hystrix熔断
 feign:
   hystrix:
     enabled: true
