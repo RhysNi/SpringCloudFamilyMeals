@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: eureka3
+    active: eureka1
   application:
     name: EurekaServer
   #安全认证

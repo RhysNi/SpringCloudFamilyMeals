@@ -2871,15 +2871,29 @@ public class AdminApplication {
 
 <img src="https://i0.hdslb.com/bfs/album/1354d9d71a8212c96bee6d9b50ac78cb50715365.png" alt="image-20220929041458411" style="zoom:800%;" />
 
-#### GitHub仓库搭建<img src="https://i0.hdslb.com/bfs/album/dc3def30fa605f52149e188248ca9469840b19d4.png" alt="image-20220929025639343" style="zoom:800%;" />
+#### Gitee仓库搭建
+
+> **推荐**使用这种，因为`GitHub`经常连接超时
+
+<img src="https://i0.hdslb.com/bfs/album/5df1e7d9e2bc025cf31dc8bd4d954eb81243fa09.png" alt="image-20220930152015921" style="zoom:200%;" />
+
+#### GitHub仓库搭建
+
+<img src="https://i0.hdslb.com/bfs/album/dc3def30fa605f52149e188248ca9469840b19d4.png" alt="image-20220929025639343" style="zoom:800%;" />
+
+
 
 > 拉取配置中心到本地IDEA
 
 <img src="https://i0.hdslb.com/bfs/album/aa4e45057c126a51d381b05d3d9c40eacc0a05b7.png" alt="image-20220929025943771" style="zoom:800%;" />
 
-> 贴入刚创建的仓库地址进行克隆
+> 贴入刚创建的`Gitee`仓库地址进行克隆
 
-<img src="https://i0.hdslb.com/bfs/album/e01dd81126040357f29f9384760d53806ac6b367.png" alt="image-20220929030425911" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c91ff8edc44a72e24c0afc8f4694657f93bfa4e3.png" alt="image-20220930152530315" style="zoom:200%;" />
+
+> 或者用`GitHub`
+
+<img src="https://i0.hdslb.com/bfs/album/e01dd81126040357f29f9384760d53806ac6b367.png" alt="image-20220929030425911" style="zoom: 200%;" />
 
 > 克隆完成在工程中添加`dev`、`test`、`uat`、`prod`四个配置文件
 
@@ -2889,7 +2903,15 @@ public class AdminApplication {
 
 <img src="https://i0.hdslb.com/bfs/album/13d86de1fdf2168ea747f3c13b1c0ea0925cd616.png" style="zoom:800%;" />
 
+> `Gitte`版
+
+<img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220930152622903.png" alt="image-20220930152622903" style="zoom:200%;" />
+
+> `GitHub`版
+
 <img src="https://i0.hdslb.com/bfs/album/c6034089a583507bb708b3844de92fe6437543dc.png" alt="image-20220929033920767" style="zoom:800%;" />
+
+
 
 #### 配置中心服务端搭建
 
@@ -2921,6 +2943,8 @@ public class ConfigCenterApplication {
 ```
 
 > 在`Config-Center`服务的`application.yml`配置文件中添加以下配置
+>
+> - `uri`根据你选用的仓库自行修改
 
 ```yaml
 server:
@@ -2934,8 +2958,10 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/RhysNi/Config-Center.git
-      label: main
+          uri: https://gitee.com/rhysni/config-center.git
+          username: java_nsd@163.com
+          password: 980512nsd
+      label: master
 
 eureka:
   client:
@@ -2962,18 +2988,29 @@ management:
 >
 > **获取配置规则**
 >
+> 默认`master`分支，不指定`lable`时自动去`master`分支前缀匹配对应配置文件
+>
 > - 根据前缀匹配
 >   - `/文件名-环境标识.json`
 >   - `/文件名-环境标识.properties`
 >   - `/文件名-环境标识.yml`
-> - 由于这个`lable`默认是`master`分支，但是我们现在创建的仓库分支默认基本都是`main`分支（有兴趣可以嗑一下[为什么GitHub取消`master`分支](https://blog.csdn.net/csdnsevenn/article/details/108898305)），所以目前好像只能通过下面这种指明lable的方式去访问了，当然，你也可以自己建立一个`master`分支
+> - 由于这个`lable`默认是`master`分支，但是我们现在如果是用`GitHub`创建的仓库，他的分支现在默认是`main`分支（有兴趣可以嗑一下[为什么GitHub取消`master`分支](https://blog.csdn.net/csdnsevenn/article/details/108898305)），所以目前只能通过下面这种`指定lable`的方式去访问，当然，你也可以自己建立一个`master`分支
 >   - `/label(git仓库分支)/文件名-环境标识.yml`
 
 ```http
+#Github版
 http://localhost:7777/main/feign-consumer-dev.yml
+#Gitee版 & Github版手动创建Master分支后也可以用这个url
+http://localhost:7777/feign-consumer-dev.yml
 ```
 
 > 经测试是可以正常读取到的
+
+<img src="https://i0.hdslb.com/bfs/album/53ed83e1a80b7f74cc6dddf3660cafccb8596dd9.png" alt="image-20220930154726742" style="zoom:200%;" />
+
+![image-20220930154656202](https://i0.hdslb.com/bfs/album/6e8bcaf93fe4431420ff5618b712f6af6be68b50.png)
+
+> `GitHub`版
 
 <img src="https://i0.hdslb.com/bfs/album/afe22b173f78c98a199afb370d45bfe64b362765.png" alt="image-20220929040738399" style="zoom:800%;" />
 
@@ -2983,41 +3020,37 @@ http://localhost:7777/main/feign-consumer-dev.yml
 >
 > - 到`GitHub`仓库再创建三个分支，分别是`dev`、`test`、`uat`
 
+<img src="https://i0.hdslb.com/bfs/album/f9ab39dbcff133e030820c6e73723718bc991262.png" style="zoom:200%;" />
+
 <img src="https://i0.hdslb.com/bfs/album/5b03ffb00d1cfb1086d596fd79519c4280d5f076.png" alt="image-20220929153440061" style="zoom:800%;" />
 
 > 创建完成的话这样我们就有四个分支了，`main`、`dev`、`test`、`uat`
 
+<img src="https://i0.hdslb.com/bfs/album/d73c64d515cdd1ec52f607ae80465525c389231b.png" alt="image-20220930150409292" style="zoom:200%;" />
+
+> `GitHub`版
+
 <img src="https://i0.hdslb.com/bfs/album/2e91c67889b1b5a32b66aaeeb68edf66a3a54c0b.png" alt="image-20220929153625881" style="zoom:800%;" />
 
-> 现在我们将每个分支中`与当前分支环境不相匹配的配置文件都删除`
-
-<img src="https://i0.hdslb.com/bfs/album/b04e3317132b0eacd1d7699f553e6c4c008e00cc.png" alt="image-20220929154149413" style="zoom:800%;" />
-
-<img src="https://i0.hdslb.com/bfs/album/c3aa9ebd1804d06f35341f86970e3d860363664f.png" alt="image-20220929154217893" style="zoom:800%;" />
-
-<img src="https://i0.hdslb.com/bfs/album/656ea041b1127efb1d0f311a0da888b3662e408c.png" alt="image-20220929154241744" style="zoom:800%;" />
-
-<img src="https://i0.hdslb.com/bfs/album/878f8562b0a1248a90cc7e2ba8fdace1e9ba352f.png" alt="image-20220929154304185" style="zoom:800%;" />
-
-> 为了能更突出`根据环境`读取配置文件的效果，我这边修改一下各环节配置文件中的内容，`添加一个环境标识`，
+> **分支创建好将每个环境对应的配置文件分别放入对应的分支**
 >
-> 类似于下图中操作：添加一个`uat`前缀区分当前配置文件是根据`环境`的改变而读取的不一样的配置内容
+> - 如下图这样，依次操作
 
-<img src="https://i0.hdslb.com/bfs/album/4a7c85cb9f772280f4fd484ebffb2107c81acfd1.png" alt="image-20220929154613213" style="zoom:800%;" />
+![image-20220930155201272](https://i0.hdslb.com/bfs/album/01019c7f27fc1872c02c0bc7a80cfc706da8aa10.png)
 
-![image-20220929154935014](https://i0.hdslb.com/bfs/album/929d7000becc26d8522b5beb2657d8861177d5e1.png)
+> `GitHub`版本也是如此依次操作
 
-![image-20220929154935014](https://i0.hdslb.com/bfs/album/3c9b61eec8a934839ceebe8d167f5542296f91f4.png)
-
-<img src="https://i0.hdslb.com/bfs/album/590b19ac7cf0237f0ed1105a983da0e848f28b50.png" alt="image-20220929155054094" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4861071ac01f1159664218d90c7b23060c7a9d9d.png" alt="image-20220930160621227" style="zoom:200%;" />
 
 > 访问以下四个链接看看效果
 
 ```http
-http://localhost:7777/main/feign-consumer-prod.yml
+http://localhost:7777/master/feign-consumer-prod.yml
 http://localhost:7777/test/feign-consumer-test.yml
 http://localhost:7777/dev/feign-consumer-dev.yml
 http://localhost:7777/uat/feign-consumer-uat.yml
+#Github版，Gitee版可忽略
+http://localhost:7777/main/feign-consumer-prod.yml
 ```
 
 > 有可能会由于网络不好导致下图中`404`问题，多试几次即可，出不来也没关系，就是看个效果，没什么影响
@@ -3055,10 +3088,6 @@ spring:
     config:
       #通过URL方式查找配置中心
       uri: http://localhost:7777/
-      #通过注册中心查找
-#      discovery:
-#        enabled: true
-#        service-id: ConfigCenter
       profile: dev
       label: dev
       #文件名
@@ -3227,12 +3256,28 @@ spring:
 
 <img src="https://i0.hdslb.com/bfs/album/a587bc8f9a000084610809b19bdfe6c2af040400.png" alt="image-20220929225015059" style="zoom:800%;" />
 
-> - 确认当前配置值为`dev-2015-09-01`
-> - 修改配置文件的值为`dev-2015-09-01 BUS-Refresh`
+> 对了，这时在`RabbitMQ`中应该也可以看到自动创建了名为`springCloudBus`的交换机，和用于刷新配置的三个队列
+
+<img src="https://i0.hdslb.com/bfs/album/02951517c48436d0caab60c6a2a66f40e790c619.png" alt="image-20220930172052015" />
+
+<img src="https://i0.hdslb.com/bfs/album/02951517c48436d0caab60c6a2a66f40e790c619.png" alt="image-20220930172052015" style="zoom:200%;" />
+
+> 确认当前配置值为`dev-2015-09-01 update`
+
+<img src="https://i0.hdslb.com/bfs/album/db81d728940d5436a570f2903cda8c58dcb9978b.png" alt="image-20220930165240575" style="zoom:200%;" />
+
+> 修改配置文件的值为`dev-2015-09-01 BUS-Refresh`并提交到远程仓
+
+<img src="https://i0.hdslb.com/bfs/album/587ddd5513d18d51d9187918fb8a203503ed3957.png" alt="image-20220930165315636" style="zoom:200%;" />
+
 > - 调用`http://localhost:9080/actuator/bus-refresh`端点进行刷新
 > - 重新调用三个`Feign-Consuemr`节点的`/getRemoteConfig`接口
+>
+> 注意🔈：如果有好兄弟是用`GitHub`搭建的配置中心仓库，那这边很有可能会因为网络原因，在刷新配置文件重新拉取的时候出现某个节点没有拉取成功的问题，导致最终`某些节点配置刷新成功，某些节点配置没有刷新`
 
-##### 整体服务器更新
+![soogif](https://i0.hdslb.com/bfs/album/97eff27a16dfd25bef27e0aa8ec0df39e0410f56.gif)
+
+###### 整体服务器更新
 
 > 就是把所有节点的配置文件全部刷新了，这个就应该在我们`Config-Center`服务中进行配置了
 >
@@ -3260,7 +3305,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/RhysNi/Config-Center.git
+          uri: https://gitee.com/rhysni/config-center.git
       label: dev
   #RabbitMQ
   rabbitmq:
@@ -3280,11 +3325,12 @@ management:
       show-details: always
 ```
 
-> 重启`Config-Center`服务
+> 重启`Config-Center`高可用多实例
 >
-> - 修改配置文件值为`dev-2015-09-01 BUS-Refresh V2`
->
-> - 调用`http://localhost:7778/actuator/bus-refresh`端点刷新所有服务器配置
+> - 修改配置文件值为`dev-2015-09-01 BUS-Refresh By ConfigCenter`，并`提交到远程仓库`
+>- 调用`http://localhost:7777/actuator/bus-refresh`端点刷新所有服务器配置
+
+
 
 ## SpringCloud Alibaba
 
