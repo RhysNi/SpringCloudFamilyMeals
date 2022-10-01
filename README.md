@@ -454,7 +454,7 @@ server:
 eureka:
   client:
     service-url:
-      #向eureka2节点发起请求
+      #向eureka节点发起请求
       defaultZone: http://eureka2.com:7902/eureka/
     #是否将自己注册到其他Eureka Server,默认为true
     register-with-eureka: true
@@ -2959,8 +2959,8 @@ spring:
       server:
         git:
           uri: https://gitee.com/rhysni/config-center.git
-          username: java_nsd@163.com
-          password: 980512nsd
+          username: xxxxxx
+          password: xxxxxx
       label: master
 
 eureka:
@@ -3202,7 +3202,7 @@ management:
 
 <img src="https://i0.hdslb.com/bfs/album/ef434a25e5ffa7da13128df4f95581152bcba0ca.png" style="zoom:800%;" />
 
-###### 单个服务刷新
+###### 单体服务刷新配置
 
 > 这个时候不会自动刷新配置，需要我们自己调用一下`http://localhost:9080/actuator/refresh`接口进行刷新
 
@@ -3216,16 +3216,16 @@ management:
 
 <img src="https://i0.hdslb.com/bfs/album/94f9c8dadb42838a9bed22a37fc01bf2e822e5d2.png" alt="image-20220929213900586" style="zoom:800%;" />
 
-###### 全量服务刷新
+###### 高可用服务刷新配置
 
 > 如果我们`Feign-Consuemr`起了多个实例，这样操作每次只能刷新一个，那怎么才能全部刷新呢？
 >
 > - 我们需要接入一个`企业服务消息总线`，简称`BUS`
 > - `BUS`需要基于`amqp`协议接入`RabbitMQ`进行消息集成
 
-###### [Windows10安装Erlang和RabbitMQ](https://blog.csdn.net/weixin_44232093/article/details/124967852)
+**[Windows10安装Erlang和RabbitMQ](https://blog.csdn.net/weixin_44232093/article/details/124967852)**
 
-###### MacOS安装[HomeBrew](https://blog.csdn.net/m0_37781271/article/details/122549949)&[RabbitMQ](https://blog.csdn.net/m0_55613022/article/details/124295120)
+**MacOS安装[HomeBrew](https://blog.csdn.net/m0_37781271/article/details/122549949)&[RabbitMQ](https://blog.csdn.net/m0_55613022/article/details/124295120)**
 
 > 在`Feign-Consumer`服务添加`bus-amqp`依赖
 
@@ -3249,6 +3249,8 @@ spring:
 ```
 
 > 咱们将原来的`Feign-Consumer`停掉重启多个实例，服务启动列表如下图
+>
+> - 不出意外的话第一次启动会自动在rabbitmq中创建类似于`springCloudBus.anonymous.bcv5EJJJQaixOKdEUTXSXA`命名规则的队列
 
 <img src="https://i0.hdslb.com/bfs/album/64105a22915bcc24c64ab8b6c8b20a509932e474.png" alt="image-20220929235457153" style="zoom:200%;" />
 
@@ -3260,7 +3262,7 @@ spring:
 
 <img src="https://i0.hdslb.com/bfs/album/02951517c48436d0caab60c6a2a66f40e790c619.png" alt="image-20220930172052015" />
 
-<img src="https://i0.hdslb.com/bfs/album/02951517c48436d0caab60c6a2a66f40e790c619.png" alt="image-20220930172052015" style="zoom:200%;" />
+<img src="https://i0.hdslb.com/bfs/album/dae894db453317db58842ee1b2e27fb026277fd0.png" alt="image-20221001215457718" style="zoom:200%;" />
 
 > 确认当前配置值为`dev-2015-09-01 update`
 
@@ -3277,7 +3279,7 @@ spring:
 
 ![soogif](https://i0.hdslb.com/bfs/album/97eff27a16dfd25bef27e0aa8ec0df39e0410f56.gif)
 
-###### 整体服务器更新
+###### 整体服务器刷新配置
 
 > 就是把所有节点的配置文件全部刷新了，这个就应该在我们`Config-Center`服务中进行配置了
 >
@@ -3330,7 +3332,7 @@ management:
 > - 修改配置文件值为`dev-2015-09-01 BUS-Refresh By ConfigCenter`，并`提交到远程仓库`
 >- 调用`http://localhost:7777/actuator/bus-refresh`端点刷新所有服务器配置
 
-
+<img src="https://i0.hdslb.com/bfs/album/ded2680e8bc896f774f700d35fa8a56f8760e9f1.gif" alt="20221001_222024" style="zoom:200%;" />
 
 ## SpringCloud Alibaba
 
@@ -3338,3 +3340,4 @@ management:
 
 
 
+ 

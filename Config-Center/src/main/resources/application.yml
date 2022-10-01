@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 7779
 
 # 应用名称
 spring:
@@ -10,6 +10,8 @@ spring:
       server:
         git:
           uri: https://gitee.com/rhysni/config-center.git
+          username: java_nsd@163.com
+          password: 980512nsd
       label: master
 
   #RabbitMQ
