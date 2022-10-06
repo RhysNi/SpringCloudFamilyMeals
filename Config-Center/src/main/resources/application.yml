@@ -1,5 +1,5 @@
 server:
-  port: 7779
+  port: 7777
 
 # 应用名称
 spring:

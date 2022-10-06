@@ -1,5 +1,5 @@
 server:
-  port: 9082
+  port: 9085
 
 spring:
   application:
@@ -17,24 +17,24 @@ spring:
       client:
         #Springboot Admin的信息上报地址
         url: http://localhost:9999
-  cloud:
-    config:
-      #通过URL方式查找配置中心
-#      uri: http://localhost:7777/
-      #通过注册中心查找
-      discovery:
-        enabled: true
-        service-id: ConfigCenter
-      profile: dev
-      label: dev
-      #文件名
-      name: feign-consumer
-  #RabbitMQ
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#  cloud:
+#    config:
+#      #通过URL方式查找配置中心
+##      uri: http://localhost:7777/
+#      #通过注册中心查找
+#      discovery:
+#        enabled: true
+#        service-id: ConfigCenter
+#      profile: dev
+#      label: dev
+#      #文件名
+#      name: feign-consumer
+#  #RabbitMQ
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 
 eureka:
   client:

@@ -2,7 +2,7 @@
 
 ## SpringCloud替代实现
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909015116822.png" alt="image-20220909015116822" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909015116822.png" alt="image-20220909015116822" style="zoom:400%;" />
 
 ## SpringCloud NetFlix
 
@@ -16,13 +16,13 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 
 > 创建一个空的Maven工程
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013403666.png" alt="image-20220914013403666" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013403666.png" alt="image-20220914013403666" style="zoom:400%;" />
 
-![image-20220914013419210](https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013419210.png)
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013419210.png" alt="image-20220914013419210" style="zoom:400%;" />
 
 > 把`src`文件夹删除掉作为一个空的总项目工程文件夹使用
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013553217.png" alt="image-20220914013553217" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914013553217.png" alt="image-20220914013553217" style="zoom:400%;" />
 
 > 空的工程到此就搭建好了，后续会不断往里面集成模块
 
@@ -41,29 +41,29 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 
 #### Renew
 
-> **续租，心跳**
+> **续租**
 >
 > - Eureka客户需要每30秒发送一次心跳来续租
 >
-> - 10:00 00 第一次
+> - 10:00:00 第一次
 >
 >   > 间隔30s
 >
-> - 10:00 30 第二次
+> - 10:00:30 第二次
 >
 >   > 间隔30s
 >
-> - 10:01 00 第三次
+> - 10:01:00 第三次
 >
 >   > 间隔30s
 >
-> - 10:01 30 第四次
+> - 10:01:30 第四次
 >
-> - 最后`更新通知`Eureka服务器实例仍然是`活动的`。如果服务器在`90秒内`没有看到更新，它将从其`注册表中删除`实例
+> - 最后`更新通知`Eureka服务器实例仍然是`活跃的`。如果服务器在`90秒内`没有看到更新，它将从其`注册表中删除`实例
 
-#### Fetch Registry
+#### FetchRegistry
 
-> **获取注册表**
+> **拉取注册表**
 >
 > - Eureka`客户端`从`服务器`获取`注册表信息`并将其`缓存在本地`
 > - `客户端`使用这些信息来`查找其他服务`
@@ -75,7 +75,7 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 
 > Eureka`客户端`在`关闭时`向Eureka`服务端`发送取消请求。从`服务端`的`实例注册表`中`删除实例`，从而`有效地`将实例从`通信量`中取出。
 
-#### Time Lag
+#### TimeLag
 
 > **同步时间延迟**
 >
@@ -97,7 +97,7 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 
 > 创建Eureka模块，引入`Eureka Server`依赖
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914014011033.png" alt="image-20220914014011033" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/faea852a8025b813b69e9aaabe7590e10859cc7d.png" alt="image-20220914014011033" style="zoom:400%;" />
 
 > **📢注意：**
 >
@@ -107,9 +107,9 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 >
 > **如果选用其他版本请至[Spring官网](https://spring.io/projects/spring-cloud#learn)查看对应的版本支持**
 >
-> <img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914014727123.png" alt="image-20220914014727123" style="zoom:800%;" />
+> <img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914014727123.png" alt="image-20220914014727123" style="zoom:400%;" />
 >
-> <img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914014746664.png" alt="image-20220914014746664" style="zoom:800%;" />
+> <img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914014746664.png" alt="image-20220914014746664" style="zoom:400%;" />
 >
 > 
 >
@@ -121,9 +121,9 @@ https://www.getpostman.com/collections/8a0954746646f0dee9a6
 >
 > **Supported Boot Version: 2.3.12.RELEASE**
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914015240503.png" alt="image-20220914015240503" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914015240503.png" alt="image-20220914015240503" style="zoom:400%;" />
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914015307276.png" alt="image-20220914015307276" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220914015307276.png" alt="image-20220914015307276" style="zoom:400%;" />
 
 > 至此`Eureka-Server`模块就创建完成了
 >
@@ -160,7 +160,7 @@ public class EurekaServerApplication {
 
 > 启动并在浏览器输入`http://localhost:7900/`即可显示Eureka可视化页面
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909020427408.png" alt="image-20220909020427408" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909020427408.png" alt="image-20220909020427408" style="zoom:400%;" />
 
 #### Eureka客户端
 
@@ -230,7 +230,7 @@ public class ProviderController {
 >
 > - 启动完成后如下状态便是客户端注册成功了
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220915005236658.png" alt="image-20220915005236658" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220915005236658.png" alt="image-20220915005236658" style="zoom:400%;" />
 
 > 📢特殊说明：`有兄弟可能会问，前面提到Eureka-Server`不是需要在启动类里面添加`@EnableEurekaServer`注解标识为服务端吗，那`Eureka-Provider`不需要在`@EnableEurekaClient`来标识为客户端吗？
 >
@@ -364,7 +364,7 @@ public class ConsumerController {
 
 > 启动`Eureka-Consumer`客户端并关注 `http://eureka1.com:7901/`页面中`Eureka-Consumer`是否如下样例成功注册
 
-<img src="https://i0.hdslb.com/bfs/album/b0447fcc8311c6b14021447024ea0872cbbed654.png" alt="image-20220915035016111" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/b0447fcc8311c6b14021447024ea0872cbbed654.png" alt="image-20220915035016111" style="zoom:400%;" />
 
 > `Postman`调用接口进行验证
 >
@@ -378,7 +378,7 @@ curl --location --request GET 'http://localhost:8081/consumer/services'
 
 > 说明三个服务（包括Eureka自己）都成功注册并获取到了服务列表
 
-<img src="https://i0.hdslb.com/bfs/album/409870749dd9f1d15bfe279627a193bf448098c9.png" alt="image-20220915035903736" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/409870749dd9f1d15bfe279627a193bf448098c9.png" alt="image-20220915035903736" style="zoom:400%;" />
 
 > 调用`instances`服务
 
@@ -388,7 +388,7 @@ curl --location --request GET 'http://localhost:8081/consumer/instances'
 
 > 成功获取到了实例信息
 
-<img src="https://i0.hdslb.com/bfs/album/5a2ba4ac861708b05842bd18dbb8b2dd796ff943.png" alt="image-20220915040248737" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/5a2ba4ac861708b05842bd18dbb8b2dd796ff943.png" alt="image-20220915040248737" style="zoom:400%;" />
 
 > 调用`testProvider`接口验证远程调用`Eureka-Provider`客户端的`pingProvider`接口
 
@@ -429,7 +429,7 @@ vim /etc/hosts
 127.0.0.1 eureka2.com
 ```
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909023333988.png" alt="image-20220909023333988" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909023333988.png" alt="image-20220909023333988" style="zoom:400%;" />
 
 ###### Windows修改方式
 
@@ -441,7 +441,7 @@ vim /etc/hosts
 > - 最后分别`ping`一下两个域名，如果能`ping`通说明生效了
 > - 如果`ping`不通则关闭杀毒软件等重新修改保存再试
 
-<img src="https://i0.hdslb.com/bfs/album/86b2469657c90421bea0bf7c48392957cdc5a41e.png" alt="image-20220919112813266" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/86b2469657c90421bea0bf7c48392957cdc5a41e.png" alt="image-20220919112813266" style="zoom:400%;" />
 
 ##### 创建多个节点配置文件
 
@@ -501,25 +501,25 @@ spring:
 >
 > - <a id="idea">想要在IDEA启动多个实例需要配置一下</a>
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909042440890.png" alt="image-20220909042440890" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909042440890.png" alt="image-20220909042440890" style="zoom:400%;" />
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909042505383.png" alt="image-20220909042505383" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909042505383.png" alt="image-20220909042505383" style="zoom:400%;" />
 
 > 当然，可能有部分兄弟`IDEA`版本跟我的不同，界面布局可能跟我的不太一样，可能会是这样的
 
-<img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220919103703664.png" alt="image-20220919103703664" style="zoom:800%;" />
+<img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220919103703664.png" alt="image-20220919103703664" style="zoom:400%;" />
 
 > 没关系，不用慌，该有的功能还是有的，只是放到了不同的地方而已，点击`Modify Options`
 
-<img src="https://i0.hdslb.com/bfs/album/11cb2faf1976b873e796b75022fc229527b700e3.png" alt="image-20220919103849664" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/11cb2faf1976b873e796b75022fc229527b700e3.png" alt="image-20220919103849664" style="zoom:400%;" />
 
 > 在弹出的下拉框中选择`Allow multiple instances`
 
-<img src="https://i0.hdslb.com/bfs/album/f1c1b0fe7c665e39b272eeb0048a8946b1206a7a.png" alt="image-20220919103920154" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/f1c1b0fe7c665e39b272eeb0048a8946b1206a7a.png" alt="image-20220919103920154" style="zoom:400%;" />
 
 > 点击保存设置，此时便可以继续往下操作了
 
-<img src="https://i0.hdslb.com/bfs/album/021051817db284e8ea92ec2ff703a88ccef3aac9.png" alt="image-20220919104047252" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/021051817db284e8ea92ec2ff703a88ccef3aac9.png" alt="image-20220919104047252" style="zoom:400%;" />
 
 > 启动两个Eureka服务
 
@@ -527,9 +527,9 @@ spring:
 
 > 启动成功后进入浏览器查看`http://localhost:7901/`、`http://localhost:7902/`如下便是配置成功了
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909044617421.png" alt="image-20220909044617421" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909044617421.png" alt="image-20220909044617421" style="zoom:400%;" />
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909044545408.png" alt="image-20220909044545408" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220909044545408.png" alt="image-20220909044545408" style="zoom:400%;" />
 
 ##### 自我保护机制
 
@@ -556,7 +556,7 @@ spring:
 >
 > - 意思是Eureka可能会错误地声称实例已启动，而实际上它们并没有。更新时间小于阈值，因此为了安全起见，实例不会过期。
 
-<img src="https://i0.hdslb.com/bfs/album/a18a2b6ffb16eec45135cce8ce480c2d55426a4b.png" alt="image-20220916030929146" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a18a2b6ffb16eec45135cce8ce480c2d55426a4b.png" alt="image-20220916030929146" style="zoom:400%;" />
 
 > 关闭自我保护，这个配置默认是true 也就是自我保护机制默认是开启的
 
@@ -573,7 +573,7 @@ eureka:
 >
 > - 意思是自保模式已关闭。可能不会在出现网络/其他问题时保护实例过期。
 
-<img src="https://i0.hdslb.com/bfs/album/ba83e6e5dbdc3ad4c681e1902098486954aa0c06.png" alt="image-20220916001940004" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/ba83e6e5dbdc3ad4c681e1902098486954aa0c06.png" alt="image-20220916001940004" style="zoom:400%;" />
 
 #### Eureka 健康检查
 
@@ -607,13 +607,13 @@ eureka:
       enabled: true
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/65ad336c1256b47cc84c97bf23ffbbbfb7558aab.png" alt="image-20220916004443405" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/65ad336c1256b47cc84c97bf23ffbbbfb7558aab.png" alt="image-20220916004443405" style="zoom:400%;" />
 
 > 启动`Eureka-Provider`和`Eureka-Consumer`
 >
 > 启动成功后可在控制台看到`/actuator`路径打印在了日志中
 
-<img src="https://i0.hdslb.com/bfs/album/4fe330fbecdfea6c6bdf13b7aee5abcd8e4e4273.png" alt="image-20220916010144428" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4fe330fbecdfea6c6bdf13b7aee5abcd8e4e4273.png" alt="image-20220916010144428" style="zoom:400%;" />
 
 > 访问`/actuator`
 
@@ -621,7 +621,7 @@ eureka:
 curl --location --request GET 'localhost:8080/actuator'
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/4d67dc4d813a6e483cee6cc258acf059d8b2d4f6.png" alt="image-20220916014556303" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4d67dc4d813a6e483cee6cc258acf059d8b2d4f6.png" alt="image-20220916014556303" style="zoom:400%;" />
 
 > 这个接口也会带一些其他接口URL可供访问
 
@@ -656,7 +656,7 @@ management:
         include: "*"
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/d6fedc7d4ad4a666e00d1cb407f53ca793212065.png" alt="image-20220916015040443" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/d6fedc7d4ad4a666e00d1cb407f53ca793212065.png" alt="image-20220916015040443" style="zoom:400%;" />
 
 > 重启`Eureka-Provider`和`Eureka-Consumer`服务并重新调用`/actuator`接口
 >
@@ -784,7 +784,7 @@ management:
       enabled: true
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/daadb86634d7eb16f94691362c5b2755dd26246b.png" alt="image-20220916030618137" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/daadb86634d7eb16f94691362c5b2755dd26246b.png" alt="image-20220916030618137" style="zoom:400%;" />
 
 > 修改完成重启`Eureka-Provider`和`Eureka-Consumer`服务，使用Post方式请求
 
@@ -798,7 +798,7 @@ management:
 
 > 关闭成功后再去查看`eureka1.com:7901`服务列表中就没有`Eureka-Provider`服务了
 
-<img src="https://i0.hdslb.com/bfs/album/c4cfd6239b43317e786e5031aae94667da33aa10.png" alt="image-20220916031745534" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c4cfd6239b43317e786e5031aae94667da33aa10.png" alt="image-20220916031745534" style="zoom:400%;" />
 
 > 上面了解了这么多健康检查相关的内容，那我现在想修改健康状态的服务该怎么操作呢？
 >
@@ -850,7 +850,7 @@ curl --location --request GET 'localhost:8080/health?status=false
 curl --location --request GET 'http://localhost:8080/actuator/health
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/0fe1cbff2e910003fae45bfd3081000f1083e903.png" alt="image-20220916035130722" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/0fe1cbff2e910003fae45bfd3081000f1083e903.png" alt="image-20220916035130722" style="zoom:400%;" />
 
 #### SpringSecurity安全配置
 
@@ -867,23 +867,23 @@ curl --location --request GET 'http://localhost:8080/actuator/health
 
 > 也可以安装一个`EditStarters`插件，在开发过程中也能方便添加修改spring boot starter.
 
-<img src="https://i0.hdslb.com/bfs/album/e69d42338956acda945452e0dbef2386ff2afcc0.png" alt="image-20220916041625968" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/e69d42338956acda945452e0dbef2386ff2afcc0.png" alt="image-20220916041625968" style="zoom:400%;" />
 
 > Mac系统在`pom`文件中按`Command`+`N`弹窗选择这个插件即可
 >
 > Window系统在`pom`文件中按`Alt`+`Insert`弹窗选择这个插件即可
 
-<img src="https://i0.hdslb.com/bfs/album/a5eb11ef8dafd6ed96520beae1640f5b8dfdbc41.png" alt="image-20220916041923940" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a5eb11ef8dafd6ed96520beae1640f5b8dfdbc41.png" alt="image-20220916041923940" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/9ece531e4d59830499a51bccdfd32c809f948bf8.png" alt="image-20220916042019059" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/9ece531e4d59830499a51bccdfd32c809f948bf8.png" alt="image-20220916042019059" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/fb206549d0bbf047ed23755da22fd7422a90849e.png" alt="image-20220916041310730" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/fb206549d0bbf047ed23755da22fd7422a90849e.png" alt="image-20220916041310730" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/c5da1ec5cf33fc96d8eaa6bbe3b5ef2ab7fea7b3.png" alt="image-20220916041337522" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c5da1ec5cf33fc96d8eaa6bbe3b5ef2ab7fea7b3.png" alt="image-20220916041337522" style="zoom:400%;" />
 
 > 这样就会自动将依赖添加到`pom`文件中
 
-<img src="https://i0.hdslb.com/bfs/album/4936ca3d3addccba3cc5afef91a4fafc4a5e1e04.png" alt="image-20220916042230459" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4936ca3d3addccba3cc5afef91a4fafc4a5e1e04.png" alt="image-20220916042230459" style="zoom:400%;" />
 
 > 添加完成依赖再到`Eureka-Provider`服务中的`application.yml`中添加以下配置
 
@@ -895,7 +895,7 @@ spring:
       password: 123456
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/a6a545568f377fe67a299f97f8e069c353e82b41.png" alt="image-20220916043622436" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a6a545568f377fe67a299f97f8e069c353e82b41.png" alt="image-20220916043622436" style="zoom:400%;" />
 
 > 如果只是修改注册中心的配置是没有用的，其他服务是没法注册进来的，我们还需要去修改所有`application.yml`文件中`defaultZone`配置项
 >
@@ -927,9 +927,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 > 重启所有服务并打开浏览器进入`http://localhost:7091/login`、`http://localhost:7092/login`输入用户名密码登录
 
-<img src="https://i0.hdslb.com/bfs/album/9de72212d6d2212182620a79ab6dafec18580342.png" alt="image-20220916044004645" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/9de72212d6d2212182620a79ab6dafec18580342.png" alt="image-20220916044004645" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/f0b0089736893dea1ab8d85effcec4063d18aabc.png" alt="image-20220916045815150" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/f0b0089736893dea1ab8d85effcec4063d18aabc.png" alt="image-20220916045815150" style="zoom:400%;" />
 
 #### [Eureka-Rest服务调用](https://github.com/Netflix/eureka/wiki/Eureka-REST-operations)
 
@@ -964,7 +964,7 @@ http://eureka1.com:7901/eureka/apps
 >
 > - 在请求头中添加`Accept:application/json`参数即可返回`JSON`格式
 
-<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220915012117166.png" alt="image-20220915012117166" style="zoom:800%;" />
+<img src="https://gitee.com/rhysni/PicGoImg/raw/master/typora-user-images/image-20220915012117166.png" alt="image-20220915012117166" style="zoom:400%;" />
 
 ```json
 {
@@ -1188,29 +1188,12 @@ http://eureka1.com:7901/eureka/status
 
 #### Ribbon调用原理
 
-> - 首先服务得注册到`EurekaServer`（注册中心）
-> - 由`EurekaClient`（客户端）获取到注册列表
+> - 首先`EurekaProvider`（服务提供方）高可用服务得注册到`EurekaServer`（注册中心）
+> - 由`EurekConsumer`（服务消费方）获取到注册列表
 > - 使用`RestTemplate`发起`Http`请求前使用`Ribbon`进行`choose`根据负载均衡策略获取到一台机器的信息
 > - 最后使用注册表中的节点信息去调用具体的服务
 
-<img src="https://i0.hdslb.com/bfs/album/53f94cfb4f38a9878ab1ee4057373557d6fa8d21.png" alt="image-20220919000843949" style="zoom:800%;" />
-
-#### 两种负载均衡
-
-> 当系统面临大量的用户访问，负载过高的时候，通常会增加服务器数量来进行横向扩展（集群），多个服务器的负载需要均衡，以免出现服务器负载不均衡，部分服务器负载较大，部分服务器负载较小的情况。通过负载均衡，使得集群中服务器的负载保持在稳定高效的状态，从而提高整个系统的处理能力。
-
-##### 软负载
-
-- nginx
-- lvs
-
-> 第一层可以用DNS，配置多个A记录，让DNS做第一层分发。
->
-> 第二层用比较流行的是反向代理，核心原理：代理根据一定规则，将http请求转发到服务器集群的单一服务器上。
-
-##### 硬负载
-
-- F5
+<img src="https://i0.hdslb.com/bfs/album/8f10944b8fc5637d09088ff9ca5fd6f343094695.png" alt="image-20221005213346446" style="zoom:200%;" />
 
 #### 负载均衡策略
 
@@ -1383,11 +1366,11 @@ public class ConsumerController {
 > - 再将`Eureka-Consumer`服务中`application.yml`配置文件的端口号修改为`8090`，规避端口占用
 > - 如下图便是启动成功了，可在服务列表看到所有启动的服务信息
 
-<img src="https://i0.hdslb.com/bfs/album/ddec8f226656f28d2e0f2958e396ca88c0883b9d.png" alt="image-20220919005920269" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/ddec8f226656f28d2e0f2958e396ca88c0883b9d.png" alt="image-20220919005920269" style="zoom:400%;" />
 
 > 进入`http://localhost:7901/`也可以看到服务注册信息
 
-<img src="https://i0.hdslb.com/bfs/album/eaee45bbcd1387e545993b2ed8387031f5291799.png" alt="image-20220919005831038" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/eaee45bbcd1387e545993b2ed8387031f5291799.png" alt="image-20220919005831038" style="zoom:400%;" />
 
 > 接下来就是使用`Postman`调用`Eureka-Consumer`服务提供的接口了
 
@@ -1397,9 +1380,9 @@ http://localhost:8090/consumer/testProviderForLB
 
 > 我们调用3次看看每次返回的端口号是什么
 
-<img src="https://i0.hdslb.com/bfs/album/104e4e6da5fbe8ffbb1cf763729035d40c4c41dd.png" alt="image-20220919011047734" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/104e4e6da5fbe8ffbb1cf763729035d40c4c41dd.png" alt="image-20220919011047734" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/a6f30e786d3529604237becb1f54777b1737a4ed.png" alt="image-20220919011122900" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a6f30e786d3529604237becb1f54777b1737a4ed.png" alt="image-20220919011122900" style="zoom:400%;" />
 
 ![image-20220919011203134](https://i0.hdslb.com/bfs/album/f11caf96109d0c2b47923ee692265e4eb109f825.png)
 
@@ -1544,7 +1527,7 @@ curl --location --request GET 'http://localhost:8090/consumer/testLBConfig'
 
 > 可以看到，通过配置文件针对具体服务定制负载均衡策略也是同样的效果
 
-<img src="https://i0.hdslb.com/bfs/album/a3b9297a664778f251c01b70ec51debefe1179bf.gif" alt="20220920_013825_edit" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a3b9297a664778f251c01b70ec51debefe1179bf.gif" alt="20220920_013825_edit" style="zoom:400%;" />
 
 ##### Ribbon独立使用
 
@@ -1565,7 +1548,7 @@ ribbon:
 >
 > 可以看到还是同样的效果，所以综上所述，这几种方式都可以实现Ribbon负载均衡
 
-<img src="https://i0.hdslb.com/bfs/album/8d38b18b1f1a91a92486962469eaae602c484c70.gif" alt="20220920_023648_edit" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/8d38b18b1f1a91a92486962469eaae602c484c70.gif" alt="20220920_023648_edit" style="zoom:400%;" />
 
 ### Feign
 
@@ -1573,17 +1556,17 @@ ribbon:
 
 #### Feign和OpenFeign
 
-> - OpenFeign是`Netflix`开发的`声明式、模板化`的HTTP请求客户端。可以更加便捷、优雅地调用http api
-> - OpenFeign会根据带有注解的函数信息构建出网络请求的模板，在发送网络请求之前，OpenFeign会将函数的参数值设置到这些请求模板中
+> - Feign是`Netflix`开发的`声明式、模板化`的HTTP请求客户端。可以更加便捷、优雅地调用http api
+> - Feign有一套自己的注解，`不支持`Spring MVC的注解
 > - OpenFeign是Spring Cloud 在Feign的基础上支持了Spring MVC的注解，如@RequesMapping
 > - OpenFeign的`@FeignClient`可以解析SpringMVC的`@RequestMapping`注解的接口，
 >   并通过`动态代理`的方式产生实现类，实现类中做`负载均衡`并调用其他服务。
-> - Feign有一套自己的注解，`不支持`Spring MVC的注解
-> - Feign主要是构建微服务消费端。只要使用OpenFeign提供的注解修饰定义网络请求的接口类，就可以使用该接口的实例发送RESTful的网络请求。还可以集成`Ribbon`和`Hystrix`，提`供负载均衡`和`断路器`
+> - OpenFeign会根据带有注解的函数信息构建出网络请求的模板，在发送网络请求之前，OpenFeign会将函数的参数值设置到这些请求模板中
+> - 使用OpenFeign提供的注解修饰定义网络请求的接口类，就可以使用该接口的实例发送RESTful的网络请求。还可以集成`Ribbon`和`Hystrix`，提`供负载均衡`和`断路器`
 
 #### 工程搭建
 
-> 为了对新手更友好，我就不往`Eureka-Provider`和`Eureka-Consumer`客户端中堆代码了，新建`Feign-Api`、`Feign-Provider`和`Feign-Consumer`工程来演示`Feign`的使用，现在我们开始创建工程，按一下顺序逐步创建
+> 为了对新手更友好，我就不往`Eureka-Provider`和`Eureka-Consumer`客户端中堆代码了，新建`Feign-Api`、`Feign-Provider`和`Feign-Consumer`工程来演示`Feign`的使用，现在我们开始创建工程，按以下顺序逐步创建
 >
 > - 新建`Service-Api`
 > - 新建`Feign-Provider`
@@ -1591,11 +1574,11 @@ ribbon:
 
 ##### Service-Api搭建
 
-<img src="https://i0.hdslb.com/bfs/album/47e58ac999d9c908d0d415ff0104d326fae29221.png" alt="image-20220921040753012" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/47e58ac999d9c908d0d415ff0104d326fae29221.png" alt="image-20220921040753012" style="zoom:400%;" />
 
 > `Service-Api`只需要添加一个`Spring Web`依赖即可
 
-<img src="https://i0.hdslb.com/bfs/album/0988224ff570597a2862d4ed14693eafa8cc97c0.png" alt="image-20220921040927354" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/0988224ff570597a2862d4ed14693eafa8cc97c0.png" alt="image-20220921040927354" style="zoom:400%;" />
 
 > 新建`ServiceApi`接口，暴露一个`/pingFeignProvider`
 
@@ -1614,15 +1597,15 @@ public interface ServiceApi {
 
 > `Feign-Provider`这边我们选上`Spring Web`和`Eureka Discovery Client`两个依赖即可，这边的`SpringBoot`版本不用管，本次用的SpringCloud版本为  **Hoxton.SR12**, 所以SpringBoot版本要选**2.3.12.RELEASE** 这里是没有，我们稍后手动到pom文件里面修改版本即可
 
-<img src="https://i0.hdslb.com/bfs/album/0e81bccd9d5c192d958edd1b3b685d006470b20d.png" alt="image-20220921003552664" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/0e81bccd9d5c192d958edd1b3b685d006470b20d.png" alt="image-20220921003552664" style="zoom:400%;" />
 
 > <a id="spring-boot-starter-parent.version">修改`pom`文件中`spring-boot-starter-parent - version` 为`2.3.12.RELEASE`</a>
 
-<img src="https://i0.hdslb.com/bfs/album/c33905f923f2dd0050e35891c0817ee05a2c288c.png" alt="image-20220921004416205" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c33905f923f2dd0050e35891c0817ee05a2c288c.png" alt="image-20220921004416205" style="zoom:400%;" />
 
 > <a id="spring-cloud.version">修改`spring-cloud.version`为`Hoxton.SR12`</a>
 
-<img src="https://i0.hdslb.com/bfs/album/5d8c67006632f9b6988aaf6bbd14e4b4cfcb60b9.png" alt="image-20220921020938975" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/5d8c67006632f9b6988aaf6bbd14e4b4cfcb60b9.png" alt="image-20220921020938975" style="zoom:400%;" />
 
 > 新建`application.yml`文件并添加以下配置
 >
@@ -1680,11 +1663,11 @@ public class FeignProviderController implements ServiceApi {
 
 ##### Feign-Consumer搭建
 
-<img src="https://i0.hdslb.com/bfs/album/573f2b1006be7d570e0fc0a7bd65510cab6acd38.png" alt="image-20220921015646914" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/573f2b1006be7d570e0fc0a7bd65510cab6acd38.png" alt="image-20220921015646914" style="zoom:400%;" />
 
 > 同样的在左侧栏里面找到并勾选`Spring Web`和`Eureka Discovery Client`、`OpenFeign`三个依赖
 
-<img src="https://i0.hdslb.com/bfs/album/9abf14ee6f3ba38eff4272887df7c3f4637a7821.png" alt="image-20220921020135899" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/9abf14ee6f3ba38eff4272887df7c3f4637a7821.png" alt="image-20220921020135899" style="zoom:400%;" />
 
 > 同`Feign-Provider`一样方式修改[`Cloud`](#spring-cloud.version)和[`Boot`](#spring-boot-starter-parent.version)版本 （点击前方关键词跳转查看）
 
@@ -1768,15 +1751,15 @@ public class FeignConsumerController {
 > - 启动一个`Feign-Consumer`服务
 > - 调用`Feign-Consumer`中的`/testOpenFeign`接口
 
-<img src="https://i0.hdslb.com/bfs/album/a2faacc214e62b8d8ed3683c56b4c47e6dc93dfc.png" alt="image-20220921052812592" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a2faacc214e62b8d8ed3683c56b4c47e6dc93dfc.png" alt="image-20220921052812592" style="zoom:400%;" />
 
 > 可以看到所有服务都在Eureka注册成功了
 
-<img src="https://i0.hdslb.com/bfs/album/92540a797f83c42f3017c740545ed7033ca8b3f7.png" alt="image-20220921052836010" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/92540a797f83c42f3017c740545ed7033ca8b3f7.png" alt="image-20220921052836010" style="zoom:400%;" />
 
 > 调用`http://localhost:9080/testOpenFeign`接口
 
-<img src="https://i0.hdslb.com/bfs/album/9757877fe4098a36c711d54b05dc737ebf15a543.png" alt="image-20220921051749918" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/9757877fe4098a36c711d54b05dc737ebf15a543.png" alt="image-20220921051749918" style="zoom:400%;" />
 
 #### 超时案例
 
@@ -1844,7 +1827,7 @@ ribbon:
 > - 在注释掉`睡眠`代码，启动两个实例
 > - 总共三个实例，模拟Ribbon的重试和`服务降级`（非熔断降级），这边降级意思就是重试一定次数后，在`一定时间内`（一般6秒）就不会再去调这个服务节点，6秒后再有请求过来会再次尝试去调用该服务节点
 
-<img src="https://i0.hdslb.com/bfs/album/d10d49c9f239352b0d9eb7e431062ba876bce1e3.gif" alt="20220923_033735_edit(1)(1)" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/d10d49c9f239352b0d9eb7e431062ba876bce1e3.gif" alt="20220923_033735_edit(1)(1)" style="zoom:400%;" />
 
 > 最后再调用`Feign-Consumer`的`/testOpenFeign`接口
 >
@@ -1856,17 +1839,17 @@ ribbon:
 
 > 熔断降级，防止服务雪崩。
 >
-> - 实现了 超时机制和断路器模式
+> - 实现了超时机制和断路器模式
 > - 用于隔离远程系统、服务或者第三方库，防止级联失败，从而提升系统的可用性与容错性。
->   - 为系统提供保护机制。在依赖的服务出现高延迟或失败时，为系统提供保护和控制。
->   - 防止雪崩。
->   - 包裹请求：使用HystrixCommand（或HystrixObservableCommand）包裹对依赖的调用逻辑，每个命令在独立线程中运行。
->   - 跳闸机制：当某服务失败率达到一定的阈值时，Hystrix可以自动跳闸，停止请求该服务一段时间。
->   - 资源隔离：Hystrix为每个请求都的依赖都维护了一个小型线程池，如果该线程池已满，发往该依赖的请求就被立即拒绝，而不是排队等候，从而加速失败判定。防止级联失败。
->   - 快速失败：Fail Fast。同时能快速恢复。侧重点是：（不去真正的请求服务，发生异常再返回），而是直接失败。
->   - 监控：Hystrix可以实时监控运行指标和配置的变化，提供近实时的监控、报警、运维控制。
->   - 回退机制：fallback，当请求失败、超时、被拒绝，或当断路器被打开时，执行回退逻辑。回退逻辑我们自定义，提供优雅的服务降级。
->   - 自我修复：断路器打开一段时间后，会自动进入“半开”状态，可以进行打开，关闭，半开状态的转换。前面有介绍。
+> - 为系统提供保护机制。在依赖的服务出现高延迟或失败时，为系统提供保护和控制。
+> - 防止雪崩。
+> - 包裹请求：使用HystrixCommand（或HystrixObservableCommand）包裹对依赖的调用逻辑，每个命令在独立线程中运行。
+> - 跳闸机制：当某服务失败率达到一定的阈值时，Hystrix可以自动跳闸，停止请求该服务一段时间。
+> - 资源隔离：Hystrix为每个请求都的依赖都维护了一个小型线程池，如果该线程池已满，发往该依赖的请求就被立即拒绝，而不是排队等候，从而加速失败判定。防止级联失败。
+> - 快速失败：Fail Fast。同时能快速恢复。侧重点是：（不去真正的请求服务，发生异常再返回），而是直接失败。
+> - 监控：Hystrix可以实时监控运行指标和配置的变化，提供近实时的监控、报警、运维控制。
+> - 回退机制：fallback，当请求失败、超时、被拒绝，或当断路器被打开时，执行回退逻辑。回退逻辑我们自定义，提供优雅的服务降级。
+> - 自我修复：断路器打开一段时间后，会自动进入“半开”状态，可以进行打开，关闭，半开状态的转换。前面有介绍。
 
 #### 降级
 
@@ -1955,11 +1938,11 @@ public class HystrixTest extends HystrixCommand {
 
 > 运行从结果可以看出程序进了`run`方法并执行算法抛出了异常，那么异常了程序后续该怎么执行呢？
 
-<img src="https://i0.hdslb.com/bfs/album/2ffc7c01adfab0c6830e9be30b837bc16f6f0468.png" alt="image-20220926012316920" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/2ffc7c01adfab0c6830e9be30b837bc16f6f0468.png" alt="image-20220926012316920" style="zoom:400%;" />
 
 > 当程序抛出异常时则会进入备用逻辑`getFallback`方法中，成功执行了备用方法里面的逻辑
 
-<img src="https://i0.hdslb.com/bfs/album/cc171b4f67c506ebcaa8a0d419666c6da39b695d.png" alt="image-20220926012517392" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/cc171b4f67c506ebcaa8a0d419666c6da39b695d.png" alt="image-20220926012517392" style="zoom:400%;" />
 
 ##### Feign整合Hystrix
 
@@ -2000,19 +1983,19 @@ public interface FeignConsumerApi extends ServiceApi {
 >
 > - 不能在类上加`@RequestMapping`注解，否则启动的时候会`重复`创建两次`相同的方法`并`且抛异常启动失败`
 
-<img src="https://i0.hdslb.com/bfs/album/07d35f3dbce7fe0a8a1809d3c57ca25f3853ce8d.png" alt="image-20220926020502535" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/07d35f3dbce7fe0a8a1809d3c57ca25f3853ce8d.png" alt="image-20220926020502535" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/7e2e6e9ad7afa92ed8d4117d2cb14631afad5c19.png" alt="image-20220926020407320" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/7e2e6e9ad7afa92ed8d4117d2cb14631afad5c19.png" alt="image-20220926020407320" style="zoom:400%;" />
 
 > 因此，我们需要去掉这个注解
 
-<img src="https://i0.hdslb.com/bfs/album/28b587de4ebb30df2e4ef23f2a45dfe286d84047.png" alt="image-20220926020606456" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/28b587de4ebb30df2e4ef23f2a45dfe286d84047.png" alt="image-20220926020606456" style="zoom:400%;" />
 
 > 我们调用一下`http://localhost:9080/testOpenFeign`接口
 >
 > - 可以看到确实走进了`FeignProviderBack`中的降级逻辑
 
-<img src="https://i0.hdslb.com/bfs/album/c64acf8c0b10ec51314020618519a98c7557f553.png" alt="image-20220926021731825" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c64acf8c0b10ec51314020618519a98c7557f553.png" alt="image-20220926021731825" style="zoom:400%;" />
 
 ###### FallbackFactory
 
@@ -2046,7 +2029,7 @@ public class FeignProviderBackFactory implements FallbackFactory<FeignConsumerAp
 >
 > - 可以看到也是生效了的
 
-<img src="https://i0.hdslb.com/bfs/album/c0f2c77981d64756d9ec80552e93960fcea5ae42.png" alt="image-20220926022802974" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c0f2c77981d64756d9ec80552e93960fcea5ae42.png" alt="image-20220926022802974" style="zoom:400%;" />
 
 > 除此以外我们还可以根据异常类型进行判断执行不同的处理逻辑
 
@@ -2155,7 +2138,7 @@ http://localhost:9080/testOpenFeignWithRest
 
 > sa
 
-<img src="https://i0.hdslb.com/bfs/album/4065ad78c3f05d2cbc56462079fb08cc1e50a5b6.png" alt="image-20220926030209425" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4065ad78c3f05d2cbc56462079fb08cc1e50a5b6.png" alt="image-20220926030209425" style="zoom:400%;" />
 
 #### 线程隔离&信号量隔离
 
@@ -2243,7 +2226,7 @@ http://localhost:9080/actuator/hystrix.stream
 >
 > `Pool Size`：线程池大小，有多少个线程
 
-<img src="https://i0.hdslb.com/bfs/album/8d961f9e3ee11651cbc2ef9e8da1135aca92f382.gif" alt="soogif(3)(1)" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/8d961f9e3ee11651cbc2ef9e8da1135aca92f382.gif" alt="soogif(3)(1)" style="zoom:400%;" />
 
 ##### 监控信号量隔离
 
@@ -2320,11 +2303,11 @@ hystrix:
 
 > 创建新项目`Zuul`
 
-<img src="https://i0.hdslb.com/bfs/album/30322704d5eb818bd24b04ab6df5a9f0ac975e6a.png" alt="image-20220926235806097" style="zoom:800%;" /> 
+<img src="https://i0.hdslb.com/bfs/album/30322704d5eb818bd24b04ab6df5a9f0ac975e6a.png" alt="image-20220926235806097" style="zoom:400%;" /> 
 
 > 添加依赖
 
-<img src="https://i0.hdslb.com/bfs/album/d08c8e978a8200adbfd9fff435e91013096e3b5f.png" alt="image-20220927000322346" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/d08c8e978a8200adbfd9fff435e91013096e3b5f.png" alt="image-20220927000322346" style="zoom:400%;" />
 
 > 修改`POM`文件中`spring-boot.version`和`spring-cloud.version`
 
@@ -2385,14 +2368,14 @@ eureka:
 >
 > - 这也正是`Zuul`存在的意义了,因为Zuul默认集成了 ribbon 和 hystrix对吧，所以可以直接通过`Zuul`网关对下游服务层做负载均衡和熔断
 
-<img src="https://i0.hdslb.com/bfs/album/42a7681b83eb8fa4b0b12b8638f48a5223cde3b8.png" alt="image-20220927032815307" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/42a7681b83eb8fa4b0b12b8638f48a5223cde3b8.png" alt="image-20220927032815307" style="zoom:400%;" />
 
 > - 启动三个`Eureka-Server`
 > - 启动三个`Feign-Provider`
 > - 启动三个`Feign-Consumer`
 > - 访问`http://localhost:7901/`查看服务列表是否所有启动的应用都注册到了`Eureka`
 
-<img src="https://i0.hdslb.com/bfs/album/22a9db31c966485fdafbdede7fb23409c3410359.png" alt="image-20220927025606743" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/22a9db31c966485fdafbdede7fb23409c3410359.png" alt="image-20220927025606743" style="zoom:400%;" />
 
 > 原来我们调用`Feign-Consumer`服务中的`/testOpenFeign`接口需要指定具体的`ip:port/api`才能匹配到对应URL，现在有了`Zuul`网关调用接口只需要`网关ip:port/serviceId/api`
 >
@@ -2406,7 +2389,7 @@ localhost:8888/feignconsumer/testOpenFeign
 
 > 可以看到成功从`ZuulServer`分发请求到下游`Feign-Consumer`服务，负载均衡也体现出来了
 
-<img src="https://i0.hdslb.com/bfs/album/30ec7f0587435a85302c492b710d79bdc3d5591b.gif" alt="20220927_033255_edit" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/30ec7f0587435a85302c492b710d79bdc3d5591b.gif" alt="20220927_033255_edit" style="zoom:400%;" />
 
 #### 服务路由配置
 
@@ -2426,7 +2409,7 @@ zuul:
 >
 > - 将`localhost:8888/feignconsumer/testOpenFeign`替换成`localhost:8888/testFC/testOpenFeign`
 
-<img src="https://i0.hdslb.com/bfs/album/73c6810112bea26b566fe23b428e3bee2531450c.png" alt="image-20220927035058453" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/73c6810112bea26b566fe23b428e3bee2531450c.png" alt="image-20220927035058453" style="zoom:400%;" />
 
 ##### 请求前缀
 
@@ -2442,6 +2425,738 @@ zuul:
   strip-prefix: true
 ```
 
+### SpringCloud Gateway
+
+> - Gateway网关是一个服务，是访问内部系统的唯一入口，提供内部服务的路由中转
+>
+> - 还可以在此基础上提供如身份验证、监控、负载均衡、限流、降级与应用检测等功能。
+
+#### 服务搭建
+
+<img src="https://i0.hdslb.com/bfs/album/eaf8d60ba35f6ae7c52a772ca56beb30982de57e.png" alt="image-20221003175903336" style="zoom:200%;" />
+
+> 勾选依赖
+
+<img src="https://i0.hdslb.com/bfs/album/ddb8d6db07b2ba73c5ec1e71e421b32f670a56a0.png" alt="image-20221003190402933" style="zoom:200%;" />
+
+> 我们这边`SpeingCloud`版本和`SpringBoot`版本选用`Hoxton.SR12 & 2.3.12.RELEASE`
+>
+> 修改`POM`文件中`spring-boot.version`和`spring-cloud.version`
+
+```xml
+<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+```
+
+#### 路由配置
+
+##### 转发指定URI
+
+> `SpringCloud GateWay`主要功能就是配置路由，那配置路由需要配置哪些配置项，怎么使用呢？一起来看看
+
+###### **predicates**
+
+> 断言，请求过来断定哪些请求可以匹配到uri上，可配多个
+
+**Path**
+
+> 路径断言，`- Path=/gateway/**`当匹配到`/gateway`这个路径的时候，不管后面是什么路径都转发到`uri`配置的地址
+>
+> - `- Path=`是固定格式，不能写成`- Path:`/`Path:`
+
+```yaml 
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 在`Feign-Consumer`服务的`FeignConsumerController`类中新增以下测试接口
+
+```java
+@GetMapping("/gateway/testGateway")
+public String testGateway() {
+  return "success";
+}
+```
+
+> 咱们启动服务测试一下配置了`Path`路径断言的效果
+>
+> 启动一个`Eureka-Server`、`Feign-Consumer`、`Gateway`这几个服务即可
+>
+> - 请求`http://localhost:6666/gateway/testGateway`接口
+
+<img src="https://i0.hdslb.com/bfs/album/efc536eb10a5094e2172a2c504b740f557811545.png" alt="image-20221004233853693" style="zoom:200%;" />
+
+> 如果把接口中`/gateway`去掉会出现什么情况
+
+```java
+@GetMapping("/testGateway")
+public String testGateway() {
+return "success";
+}
+```
+
+> 可能是这样的
+
+<img src="https://i0.hdslb.com/bfs/album/f55b415b62582c5d5531065368a505810b7cc493.png" alt="image-20221004234418810" style="zoom:200%;" />
+
+> 也可能是这样的
+
+<img src="https://i0.hdslb.com/bfs/album/8ef0c741edb889584d822d29c1c0b5c38ffc31d1.png" alt="image-20221004234455018" style="zoom:200%;" />
+
+> 那怎么样才能不带前缀请求呢？
+>
+> - 配置`filters`
+> - `StripPrefix=1`是去掉url路径中的一级前缀，也就是相当于把`http://localhost:6666/gateway/testGateway`中的`/gateway`给去掉了
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+          filters:
+            - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 重启`Gateway`服务再次调用`http://localhost:6666/gateway/testGateway`接口
+
+<img src="https://i0.hdslb.com/bfs/album/5af8b8f86c2779f9bcd5bad2f0277fc942af08a0.png" alt="image-20221004235047859" style="zoom:200%;" />
+
+**Query**
+
+> 如果是查询请求，比如根据`name`查询用户信息的这种接口，那就要这样配了
+>
+> `- Query=name,rhys`如案例中【name,rhys】->【字段名，值】，这个值可以是具体的也可以写`正则匹配`
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Query=name,rhys
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 在`Feign-Consumer`服务的`FeignConsumerController`类中新增以下测试接口
+
+```java
+@GetMapping("/testQueryPredicate")
+public String testQueryPredicate(@RequestParam("name") String name) {
+  return name;
+}
+```
+
+> 这样配置的话那就要在具体的接口后面添加查询参数了
+
+```http
+http://localhost:6666/gateway/testGateway?name=rhys
+```
+
+<img src="https://i0.hdslb.com/bfs/album/755db360adc00176d74b36d85992765e7347b133.png" alt="image-20221005224617460" style="zoom:200%;" />
+
+> 如果不传这个`name`字段，将是这样的
+
+<img src="https://i0.hdslb.com/bfs/album/80db57911f45e61c605453842bc804766ed32b6a.png" alt="image-20221005224829728" style="zoom:200%;" />
+
+> 如果我们字段值传的不是`rhys`,将是这样的
+
+<img src="https://i0.hdslb.com/bfs/album/e60cc13bf7ab6c71357da2f7abbe44118f7b5fad.png" alt="image-20221005225015217" style="zoom:200%;" />
+
+**Method**
+
+> 也可以根据方法类型进行路由，这个断言配置决定了能够请求到`POST`接口还是`Get`接口
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+            - Query=name,rhys
+            - Method=get
+          filters:
+            - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 改完配置重启`Gateway`服务，再次调用`http://localhost:6666/gateway/testQueryPredicate?name=rhys`接口依然是可以请求通的
+
+<img src="https://i0.hdslb.com/bfs/album/011d357adc575fcf7e8aa93290a488e919c049a1.png" alt="image-20221005225737344" style="zoom:200%;" />
+
+> 如果我们将`- Method=get`配置项修改为`- Method=post`
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+            - Query=name,rhys
+            - Method=post
+          filters:
+            - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 在`Feign-Consumer`服务的`FeignConsumerController`类中新增以下测试接口
+
+```java
+@PostMapping("/testMethodPredicate")
+public String testMethodPredicate(@RequestParam("name") String name) {
+  return name;
+}
+```
+
+> 重启`Feign-Consumer`和`Gateway`服务，调用`http://localhost:6666/gateway/testMethodPredicate?name=rhys`接口
+>
+> - 此时为`POST`请求的接口可以调用，为`Get`请求的接口则调不通了
+
+<img src="https://i0.hdslb.com/bfs/album/05f3381c49be032a6c3e712647a551aa17582323.png" alt="image-20221005230736113" style="zoom:200%;" />
+
+<img src="https://i0.hdslb.com/bfs/album/dc53c48289ab0ec071c3feb53e5a2cb734c778da.png" alt="image-20221005230850141" style="zoom:200%;" />
+
+**Host**
+
+> 也可以根据请求头中主机名（域名）断言来决定哪个域名的请求可以转发到对应目标地址
+>
+> - 适用于有多个网关各自拥有独立的域名，可以根据不同的域名进行不同服务的转发
+>   - 网关1负责转发服务A相关的请求
+>   - 网关2负责转发服务B相关的请求
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+            - Query=name,rhys
+            - Method=post
+            - Host=www.rhys.vip
+          filters:
+            - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 请求脚本，该脚本可直接复制导入`Postman`
+
+```http
+curl --location --request POST 'http://localhost:6666/gateway/testMethodPredicate?name=rhys' \
+--header 'Host: www.rhys.vip'
+```
+
+> 重启`Gateway`服务并再次调用`http://localhost:6666/gateway/testMethodPredicate?name=rhys`接口，别忘记在`请求头中设置Host`
+
+<img src="https://i0.hdslb.com/bfs/album/1b6a3632afd52bdf2a7dd6c612246e5a6589da50.png" alt="image-20221005234824498" style="zoom:200%;" />
+
+**Cookie**
+
+> 也可以根据 Cookie进行断言判定，根据不同Cookie响应不同用户的请求
+
+```yaml
+server:
+  port: 6666
+# 应用名称
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      #可配多条路由规则
+      routes:
+        - id: rout1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/gateway/**
+            - Query=name,rhys
+            - Method=post
+            - Host=www.rhys.vip
+            - Cookie=name,rhys
+          filters:
+            - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: http://localhost:9080
+```
+
+> 重启`Gateway`服务并用`Postman`模拟一个`Cookie`信息
+
+![20221006_000422_edit](https://i0.hdslb.com/bfs/album/b3b0fb72817057fb0019a18ca7df7ae3f2a401f4.gif)
+
+<img src="https://i0.hdslb.com/bfs/album/c8ff2493dbbb398ffd6e0ff771767abe7c0ec5ec.png" alt="image-20221006000643128" style="zoom:200%;" />
+
+> 如果`Cookie`中信息和断言配置对不上则请求无法转发到目标地址
+
+<img src="https://i0.hdslb.com/bfs/album/0219df1ae1554c98b73d66c5ee8f66680d63a1dc.png" alt="image-20221006001152407" style="zoom:200%;" />
+
+#### 负载均衡
+
+> 集成Eureka后我们就不用手动指定具体的URI地址进行转发了，可以自动拉取注册服务列表，在根据规则配置`uri`则可以对具体的服务做负载均衡
+>
+> - 添加`Eureka Client`依赖
+
+```xml
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+
+> 添加&修改`Eureka`相关配置，这边我们修改一下之前随便配置的`id`、`Path`等配置项为贴近具体服务见名知意的值，当咱们用到项目里面肯定也不能随便配一下就完了，肯定是要根据一些具体的规则去配置
+>
+> - 读取配置时，以`lb://`开头的uri直接走负载均衡策略
+
+```yaml
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      #可配多条路由规则
+      routes:
+        - id: feignConsumer
+      #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/feignConsumer/**
+            - Query=name,rhys
+            - Method=post
+            - Host=www.rhys.vip
+            - Cookie=name,rhys
+          filters:
+          - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+#          uri: http://localhost:9080
+          #走负载均衡策略
+          uri: lb://FeignConsumer
+
+eureka:
+  client:
+    service-url:
+      #向eureka发起注册请求
+      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/
+#      defaultZone: http://RhysNi:123456@eureka1.com:7901/eureka/,http://RhysNi:123456@eureka2.com:7902/eureka/,http://RhysNi:123456@eureka3.com:7903/eureka/
+  instance:
+    #查找主机
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+```
+
+> 为了更好的展示负载均衡生效了，我们在`/testMethodPredicate`接口上把端口号带上
+
+```java
+@Value("${server.port}")
+private String port;
+
+@PostMapping("/testMethodPredicate")
+public String testMethodPredicate(@RequestParam("name") String name) {
+  return name+" port:"+port;
+}
+```
+
+> 停掉所有服务，重新启动`Eureka-Server`、`Feign-Consumer`（多实例）、`Gateway`服务，如下服务列表
+
+<img src="https://i0.hdslb.com/bfs/album/4716db26662fe99ac5db02889307f2f5eb6c13df.png" alt="image-20221006035731059" style="zoom:200%;" />
+
+> 调用以下接口（可直接复制导入`Postman`）
+
+```http
+curl --location --request POST 'http://localhost:6666/feignConsumer/testMethodPredicate?name=rhys' \
+--header 'Host: www.rhys.vip' \
+--header 'Cookie: name=rhys'
+```
+
+> 可以看到当配置了`uri=lb://xxx`的时候会自动对相关服务做负载均衡
+
+<img src="https://i0.hdslb.com/bfs/album/25bc70af02d41b3e4df4cf0b83add7217ca9c980.gif" alt="20221006_034408_edit" style="zoom:200%;" />
+
+> 当然这个负载均衡策略同样是支持自定义的，之前咱们在总结`Ribbon`的时候提到过怎么自定义负载均衡策略
+>
+> - 因为我们这边是在`Gateway`服务对`Feign-Consumer`服务做负载均衡，所以我们需要在`Gateway`服务中新增自定义负载均规则类
+
+```java
+public class CustomerRule extends AbstractLoadBalancerRule {
+    @Override
+    public Server choose(Object o) {
+        List<Server> serverList = getLoadBalancer().getReachableServers();
+        //TODO：实现符合项目需要的负载均衡算法
+        return serverList.get(new Random().nextInt(serverList.size()));
+    }
+
+    @Override
+    public void initWithNiwsConfig(IClientConfig iClientConfig) {
+        // TODO document why this method is empty
+    }
+}
+```
+
+> 在`Gateway`服务配置文件中指定对`FeignConsumer`服务做负载均衡的实现类
+
+```yaml
+FeignConsumer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.rhys.gateway.rule.CustomerRule
+```
+
+> 从Debug可以看到确实可以获取到某个节点，这里获取到了`9081`节点
+
+<img src="https://i0.hdslb.com/bfs/album/192aea926577c846c925a35bd3d7ac5b3e22aefd.png" alt="image-20221006044342859" style="zoom:200%;" />
+
+> 与接口返回的端口一致，说明自定义负载均衡生效了
+
+<img src="https://i0.hdslb.com/bfs/album/baf31fc2e1c0cb00d41fce109e71773c2bc1952d.png" style="zoom: 200%;" />
+
+#### 自定义路由规则
+
+> 在`Gateway`服务中添加新的路由配置类
+>
+> **适用于项目中需要更复杂的路由规则去转发不同服务的时候**
+>
+> - 这边每一个Api其实对应的就是我们配置中的那些配置项
+>
+> - 我们目的是当调用`http://localhost:6666/jump`的时候自动跳转到百度首页
+
+```java
+@Component
+public class CustomerRoute {
+    @Bean
+    public RouteLocator routeLocator(RouteLocatorBuilder routeLocatorBuilder) {
+        return routeLocatorBuilder.routes()
+                .route(predicateSpec -> predicateSpec.path("/jump")
+                        .filters(gatewayFilterSpec -> gatewayFilterSpec.stripPrefix(1))
+                        .uri("http://www.baidu.com/"))
+                .build();
+    }
+} 
+```
+
+> 当请求`http://localhost:6666/jump`时就会自动转发到百度首页
+
+<img src="https://i0.hdslb.com/bfs/album/13d2614ea4864916c6e375f6cbfc1a296844ce74.png" alt="image-20221006050244104" style="zoom:200%;" />
+
+#### 自定义过滤器
+
+> 过滤器的使用场景非常多，例如权限认证、限流等操作都是在过滤器中进行
+>
+> - 自定义过滤器则需要新建过滤器类并实现`Ordered`接口对各个过滤器进行排序决定过滤的优先级，另外还要实现一个`GlobalFilter`接口实现`filter`方法
+>
+> - 我们现在想要对`http://localhost:6666/jump`接口进行条件过滤，让path为`/jump`的无法进行URL转发，返回一套自定义的信息
+
+```java
+@Component
+public class CustomerFilter implements Ordered, GlobalFilter {
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        RequestPath path = exchange.getRequest().getPath();
+        if ("/jump".equals(String.valueOf(path))) {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            exchange.getResponse().setRawStatusCode(HttpStatus.UNAUTHORIZED.value());
+            return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap("被过滤器处理过了，跳转不了百度了".getBytes(StandardCharsets.UTF_8))));
+        }
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
+    }
+}
+```
+
+> 重启`Gateway`服务，请求`http://localhost:6666/jump`接口
+
+<img src="https://i0.hdslb.com/bfs/album/8140a7867770de3ef15435bb05899cd191b6a33f.png" alt="image-20221006055611447" style="zoom:200%;" />
+
+> **总结一下**
+>
+> - 过滤器可以有`多个`，并且可以根据`order`设置优先级，`getOrder`返回的的值越小优先级越高
+> - chain.filter(exchange); 可以把`exchange`传递给下一个优先级的过滤器
+
+#### 权重/灰度发布
+
+> 可以做灰度发布
+
+<img src="https://i0.hdslb.com/bfs/album/f71517dc7695dbdf787c429a11f4a23347398b34.png" alt="image-20221006072053823" style="zoom:200%;" />
+
+> 我们配置两套路由规则
+>
+> `Weight`可配置两个参数【分组，权重】
+>
+> - 我们这边把两组`Feign-Consumer`高可用服务分到`FCService`同一组中，做两层负载均衡，第一层根据权重算法在`FCService`组内进行随机
+>   - 权重随机底层是一个数组，为我们这边配置的`FeignConsumer1`权重是`99%`而`FeignConsumer2`权重是`1%`，在请求过来的时候会随机生成一个数没然后去匹配数组中的权重区间
+> - 第二层交由`Ribbon`在集群内做负载均衡
+
+```yaml
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      #可配多条路由规则
+      routes:
+        - id: feignConsumer1
+      		#请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/feignConsumer/**
+            - Query=name,rhys
+            - Method=post
+            - Host=www.rhys.vip
+            - Cookie=name,rhys
+            - Weight=FCService,95
+          filters:
+          - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: lb://FeignConsumer1
+        - id: feignConsumer2
+      		#请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/feignConsumer/**
+            - Query=name,rhys
+            - Method=post
+            - Host=www.rhys.vip
+            - Cookie=name,rhys
+            - Weight=FCService,5
+          filters:
+          - StripPrefix=1
+          #请求过来路由匹配完成后转发的目标地址
+          uri: lb://FeignConsumer2
+```
+
+> 修改`FeignConsumer`服务中的应用名为`FeignConsumer1`并启动三个节点作为高可用集群
+
+```yaml
+spring:
+  application:
+    name: FeignConsumer1
+```
+
+修改`FeignConsumer`服务中的应用名为`FeignConsumer2`再启动三个节点作为高可用集群
+
+```yaml
+spring:
+  application:
+    name: FeignConsumer2
+```
+
+> 停掉所有服务，重启启动如下图服务列表中服务
+>
+> - 单实例`Feign-Consumer`
+> - 单实例`Gateway`
+> - 三实例`FeignConsumer1`
+> - 三实例`FeignConsumer2`
+
+<img src="https://i0.hdslb.com/bfs/album/5fb349b824254acb7e223dd30bcd8cdaf6adc0d9.png" alt="image-20221006074456727" style="zoom:200%;" />
+
+> 这边请求了大概45次，一共只出现2次属于`FeignConsumer2`服务的节点，45次的5%应该是2.25次，所以占比与配置相吻合，当然，数据不可能百分百刚好准确，肯定会有些许误差的，我这边也是一个大概值，想要更精准的数据需要用压力测试工具进行大请求量的测试才能得出更接近标准的值
+
+![20221006_084105](https://i0.hdslb.com/bfs/album/17b64f2379cc0d12605c5d9942bd93c9e38f1ea6.gif)
+
+#### 限流
+
+##### 令牌桶 &Redis 限流
+
+###### [Redis安装教程](https://blog.csdn.net/weixin_44977377/article/details/123343579?spm=1001.2014.3001.5501)
+
+> 在`Gateway`服务中引入`Redis`依赖
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+</dependency>
+```
+
+> 自定义执行限流算法的规则
+>
+> - 我们规定让参数为`name`的请求进入限流
+
+```java
+@Component
+public class RateLimitConfig {
+    @Bean
+    public KeyResolver keyResolver() {
+        return exchange -> Mono.just(Objects.requireNonNull(exchange.getRequest().getQueryParams().getFirst("name")));
+    }
+}
+```
+
+>  在配置文件中添加下列配置
+>
+>  - 为了不影响接下来的操作，我们将之前配置的`灰度发布`相关的`- id: feignConsumer2`相关配置全部注释掉，只开启一个路由规则即可
+>  - 将`Host`和`Cookie`断言注释掉
+>  - 将`权重`配置注释掉，否则可能会有部分请求无返回
+>
+>  - `#{@keyResolver}`，可以在spring容器中拿到名为`keyResolver`的bean
+
+```yaml
+spring:
+  application:
+    name: GatewayServer
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      #可配多条路由规则
+      routes:
+        - id: feignConsumer1
+          #请求过来断定哪些请求可以匹配到uri上，可配多个
+          predicates:
+            - Path=/feignConsumer/**
+            - Query=name,rhys
+            - Method=post
+#            - Host=www.rhys.vip
+#            - Cookie=name,rhys
+#            - Weight=FCService,100
+          filters:
+          - StripPrefix=1
+          - name: RequestRateLimiter
+            args:
+              #截取哪些规则进入限流算法
+              key-resolver: "#{@keyResolver}"
+              #发放令牌速度1个/s
+              redis-rate-limiter.replenishRate: 1
+              #总令牌数量
+              redis-rate-limiter.burstCapacity: 5
+          #请求过来路由匹配完成后转发的目标地址
+#          uri: http://localhost:9080
+          #读取配置时，以"lb://"开头的uri则直接走负载均衡策略
+          uri: lb://FeignConsumer1
+```
+
+> 启动`Redis`并且重启`Gateway`服务
+>
+> - 我这里使用了`Jmeter`测试了一波，3s请求300次
+> - 结果显示前5次符合配置中配的总令牌数量，用完后每秒生成一个新的令牌，只有拿到令牌的才请求成功，其余全部请求失败，这也说明我们限流成功
+
+<img src="https://i0.hdslb.com/bfs/album/6c6328f23a68d6913566bc43c7e1bb03ce4ec4cd.png" alt="image-20221006110744076" style="zoom:200%;" />
+
+##### GoogleGuava限流器
+
+> 添加lombok依赖
+
+```xml
+<dependency>
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+</dependency>
+```
+
+> 新建配置类
+>
+> - permitsPerSecond 每秒生成令牌数
+
+```java
+@Data
+@Validated
+public class Config {
+    @DecimalMin("0.1")
+    private Double permitsPerSecond;
+}
+```
+
+> 自定义限流器
+>
+> - `@Primary`注解得加，标识当前`customerRateLimiter`为默认的Bean
+> - 因为`RedisRateLimiter`也是实现了`AbstractRateLimiter`抽象类，所以会冲突，我们这边不用`RedisRateLimiter`
+
+```java
+@Primary
+@Component
+public class CustomerRateLimiter extends AbstractRateLimiter<Config> {
+
+    /**
+     * 每秒发一个令牌
+     */
+    private final RateLimiter limiter = RateLimiter.create(1);
+
+    @Override
+    public Mono<Response> isAllowed(String routeId, String id) {
+        Config config = getConfig().get(routeId);
+        limiter.setRate(Objects.isNull(config.getPermitsPerSecond()) ? 1 : config.getPermitsPerSecond());
+        boolean isAllow = limiter.tryAcquire();
+        return Mono.just(new Response(isAllow, new HashMap<>()));
+    }
+
+    public CustomerRateLimiter() {
+        super(Config.class, "default-rate-limit", new ConfigurationService());
+    }
+}
+```
+
+> 这里使用`Jmeter`2秒请求10次，两次调用成功测试限流成功
+
+<img src="https://i0.hdslb.com/bfs/album/ecc701eba6bd100d945cf7ee09d7669591b2dfbc.png" alt="image-20221006114902856" style="zoom:200%;" />
+
 ### Sleuth
 
 > 服务链路追踪
@@ -2455,7 +3170,7 @@ zuul:
 > - sleuth是Spring cloud的分布式追踪解决方案
 > - zipkin是twitter开源的分布式跟踪系统，收集系统的时序数据，从而追踪微服务架构中系统延时等问题，可以通过界面更加友好的展现给用户
 >   - 收集系统的时序数据，从而追踪微服务架构中系统延时等问题
->   - 由Collector、Storage、Restful API、Web U（采集器，存储器，接口，UI）四个部分组成
+>   - 由Collector、Storage、Restful API、Web UI（采集器，存储器，接口，UI）四个部分组成
 >   - sleuth 收集跟踪信息通过http请求发送给zipkin 服务，zipkin将跟踪信息存储（默认内存存储，可以用mysql，ES等存储）
 >   - 提供RESTful API接口，zipkin ui通过调用api进行数据展示，
 
@@ -2502,22 +3217,22 @@ https://download.csdn.net/download/weixin_44977377/86723976
 java -jar zipkin.jar
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/d6528be608f62d30cacbcf24ba5465c80edd9ac7.png" alt="image-20220927193354990" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/d6528be608f62d30cacbcf24ba5465c80edd9ac7.png" alt="image-20220927193354990" style="zoom:400%;" />
 
 > 然后再重启我们的`Feign-Consumer`和`Feign-Provider`服务调用`localhost:8888/api/v1/testFC/testOpenFeign`接口，这个接口是走的`Zuul`网关`别搞错了`
 >
 > - 会在被调用控制台看到多出以下信息出来，那这个一串信息代表什么呢？
 > - 【服务名，traceId,spanId,是否向zipkin上报信息】
 
-<img src="https://i0.hdslb.com/bfs/album/5cac05efc51e86543ef90853114f2d12b17ac5ef.png" alt="image-20220927162731497" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/5cac05efc51e86543ef90853114f2d12b17ac5ef.png" alt="image-20220927162731497" style="zoom:400%;" />
 
 > 调用完成后我们可以访问`Zipkin`来查看调用链路了
 
-<img src="https://i0.hdslb.com/bfs/album/e3ea089b0cba0dfa0cb7cf3909f92b71f010cebd.png" alt="image-20220927194402983" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/e3ea089b0cba0dfa0cb7cf3909f92b71f010cebd.png" alt="image-20220927194402983" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/715d49142baaf6bd19525e8f8ac94929035a245d.png" alt="image-20220927195211619" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/715d49142baaf6bd19525e8f8ac94929035a245d.png" alt="image-20220927195211619" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/6e7f90d1149784ffdf3c49f9141176df8320e3ed.png" alt="image-20220927194531052" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/6e7f90d1149784ffdf3c49f9141176df8320e3ed.png" alt="image-20220927194531052" style="zoom:400%;" />
 
 > 再看看调用出错是什么样子的，我们把`Feign-Provider`服务的`FeignProviderController`中`/pingFeignProvider`接口模拟超时的代码放开
 
@@ -2539,7 +3254,7 @@ public String pingFeignProvider() {
 
 > 可以清晰看到调用信息和耗时所在
 
-<img src="https://i0.hdslb.com/bfs/album/5b003450ea07e06635db20258dc8eaed6c3a6e58.png" alt="image-20220927195438917" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/5b003450ea07e06635db20258dc8eaed6c3a6e58.png" alt="image-20220927195438917" style="zoom:400%;" />
 
 ### Spring Boot Admin
 
@@ -2549,11 +3264,11 @@ public String pingFeignProvider() {
 
 > 创建`Admin`工程
 
-<img src="https://i0.hdslb.com/bfs/album/a84697d5e99288d7cadcedde06b9ad0d5fe2c918.png" alt="image-20220928105329659" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a84697d5e99288d7cadcedde06b9ad0d5fe2c918.png" alt="image-20220928105329659" style="zoom:400%;" />
 
 > 选择`codecentric Spring Boot Admin`依赖
 
-<img src="https://i0.hdslb.com/bfs/album/794f20d734808b17befbb23dba7c898829f8ffe2.png" alt="image-20220928110311680" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/794f20d734808b17befbb23dba7c898829f8ffe2.png" alt="image-20220928110311680" style="zoom:400%;" />
 
 > 除了上面的依赖我们还需要手动引一`Admin可视化页面`依赖
 
@@ -2645,11 +3360,11 @@ management:
 > 重启/启动所有相关服务
 >
 
-<img src="https://i0.hdslb.com/bfs/album/4c85b5ac53d946d18a2283640ec8fb2f623c4b64.png" alt="image-20220928215036276" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4c85b5ac53d946d18a2283640ec8fb2f623c4b64.png" alt="image-20220928215036276" style="zoom:400%;" />
 
 > 进入`http://localhost:9999`
 
-<img src="https://i0.hdslb.com/bfs/album/ec4539017b12ec3fc77b331724ddead1b40345c5.png" alt="image-20220928215121348" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/ec4539017b12ec3fc77b331724ddead1b40345c5.png" alt="image-20220928215121348" style="zoom:400%;" />
 
 > - 这里可以查看JVM、端点接口查看等，其实就是把我们最开始提到的那些[端点接口](#Api端点功能)的数据可视化了
 > - 关于Admin可视化具体的功能可以自己挨个点了看看，研究一下
@@ -2698,22 +3413,22 @@ mail:
 
 > 点击`设置 -> 账户`
 
-<img src="https://i0.hdslb.com/bfs/album/0187b24a9a72452979d0dec658187f33166785e8.png" alt="image-20220929012219702" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/0187b24a9a72452979d0dec658187f33166785e8.png" alt="image-20220929012219702" style="zoom:400%;" />
 
 > 找到`POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务`，开启`POP3/SMTP服务`
 >
 > - SMTP发信
 > - POP3收信
 
-<img src="https://i0.hdslb.com/bfs/album/56c0d21ba108771b83db4ee9b645f97e8ccb1b88.png" alt="image-20220929004400495" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/56c0d21ba108771b83db4ee9b645f97e8ccb1b88.png" alt="image-20220929004400495" style="zoom:400%;" />
 
 > 发送短信验证
 
-<img src="https://i0.hdslb.com/bfs/album/94d63bc168bd5fb16c3f9e47f0cfc21258ec3102.png" alt="image-20220929004506256" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/94d63bc168bd5fb16c3f9e47f0cfc21258ec3102.png" alt="image-20220929004506256" style="zoom:400%;" />
 
 > 验证成功会给一个授权码，把这个授权码配到配置中`password`配置项
 
-<img src="https://i0.hdslb.com/bfs/album/cea82746c8638b5a02ef4be613b12df65f06801e.png" alt="image-20220929004720177" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/cea82746c8638b5a02ef4be613b12df65f06801e.png" alt="image-20220929004720177" style="zoom:400%;" />
 
 > 有好兄弟问：到这就结束了吗？
 >
@@ -2721,33 +3436,33 @@ mail:
 > - 重启`Admin`服务，然后我们在服务列表中随便停掉一个/多个服务看看会发生什么
 > - 我这里将`Feign-Provider`的其中一个节点停掉了
 
-<img src="https://i0.hdslb.com/bfs/album/55680dc26748d906b261c441d6ca6a5cf937a77f.png" alt="image-20220929011628488" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/55680dc26748d906b261c441d6ca6a5cf937a77f.png" alt="image-20220929011628488" style="zoom:400%;" />
 
 > 紧接着邮箱就会收到一封相关节点下线的告警通知
 
-<img src="https://i0.hdslb.com/bfs/album/e3a72d65625bb72949b88c575bad73b42ff98593.png" alt="image-20220929023841870" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/e3a72d65625bb72949b88c575bad73b42ff98593.png" alt="image-20220929023841870" style="zoom:400%;" />
 
 #### [钉钉告警](https://open.dingtalk.com/document/group/custom-robot-access)
 
 > 首先我们先操作钉钉获取一个`Token`
 
-<img src="https://i0.hdslb.com/bfs/album/2fff13522650b9176954e51184e0b0117c1e97ae.png" alt="image-20220929015714981" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/2fff13522650b9176954e51184e0b0117c1e97ae.png" alt="image-20220929015714981" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/1c90298e507dc815a4d3afb1fdf8640dc47b0b0b.png" alt="image-20220929015757492" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/1c90298e507dc815a4d3afb1fdf8640dc47b0b0b.png" alt="image-20220929015757492" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/c286d4b76bb7e47e819390395e7e170d6cf76188.png" alt="image-20220929015836095" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c286d4b76bb7e47e819390395e7e170d6cf76188.png" alt="image-20220929015836095" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/7ab782320bee027647438f5497ad02f157199652.png" alt="image-20220929015907542" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/7ab782320bee027647438f5497ad02f157199652.png" alt="image-20220929015907542" style="zoom:400%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/bcbb656e9ebb918b64be765f561a76a268c13f59.png" alt="image-20220929015954597" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/bcbb656e9ebb918b64be765f561a76a268c13f59.png" alt="image-20220929015954597" style="zoom:400%;" />
 
 > `关键词`非常重要，可以记录一下，待会儿咱们要用到
 
-<img src="https://i0.hdslb.com/bfs/album/7ad927cc51817bdd9c67f3d169505f971cd0f70e.png" alt="image-20220929020147716" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/7ad927cc51817bdd9c67f3d169505f971cd0f70e.png" alt="image-20220929020147716" style="zoom:400%;" />
 
 > 复制该链接，自己保存好，下面流程要用到
 
-<img src="https://i0.hdslb.com/bfs/album/401c08e8d8475b48ed763f7ab906882a04e3364f.png" alt="image-20220929020325295" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/401c08e8d8475b48ed763f7ab906882a04e3364f.png" alt="image-20220929020325295" style="zoom:400%;" />
 
 > 新建`Message`和`Content`两个实体类
 
@@ -2844,7 +3559,7 @@ public class AdminApplication {
 
 > 重启`Admin`服务，再次操作服务下线，这时邮件和钉钉应该都可以收到服务下线告警了
 
-<img src="https://i0.hdslb.com/bfs/album/9127995d7411073f19a76106bded269b0f851ee3.png" alt="image-20220929023122573" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/9127995d7411073f19a76106bded269b0f851ee3.png" alt="image-20220929023122573" style="zoom:400%;" />
 
 ### Config
 
@@ -2869,7 +3584,7 @@ public class AdminApplication {
 >   - 一种是保持服务名和配置文件名一致，就会自动根据服务名去配置中心本地找这个服务名对应的环境配置文件
 >   - 第二种就是服务名和配置文件名不一致，这时就要通过`spring.cloud.config.name`配置项配置好你的配置文件名
 
-<img src="https://i0.hdslb.com/bfs/album/1354d9d71a8212c96bee6d9b50ac78cb50715365.png" alt="image-20220929041458411" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/1354d9d71a8212c96bee6d9b50ac78cb50715365.png" alt="image-20220929041458411" style="zoom:400%;" />
 
 #### Gitee仓库搭建
 
@@ -2879,13 +3594,13 @@ public class AdminApplication {
 
 #### GitHub仓库搭建
 
-<img src="https://i0.hdslb.com/bfs/album/dc3def30fa605f52149e188248ca9469840b19d4.png" alt="image-20220929025639343" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/dc3def30fa605f52149e188248ca9469840b19d4.png" alt="image-20220929025639343" style="zoom:400%;" />
 
 
 
 > 拉取配置中心到本地IDEA
 
-<img src="https://i0.hdslb.com/bfs/album/aa4e45057c126a51d381b05d3d9c40eacc0a05b7.png" alt="image-20220929025943771" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/aa4e45057c126a51d381b05d3d9c40eacc0a05b7.png" alt="image-20220929025943771" style="zoom:400%;" />
 
 > 贴入刚创建的`Gitee`仓库地址进行克隆
 
@@ -2897,11 +3612,11 @@ public class AdminApplication {
 
 > 克隆完成在工程中添加`dev`、`test`、`uat`、`prod`四个配置文件
 
-<img src="https://i0.hdslb.com/bfs/album/4ef503eedbcb5c9fc2fe6212ff2974693e51fbe7.png" alt="image-20220929033509002" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4ef503eedbcb5c9fc2fe6212ff2974693e51fbe7.png" alt="image-20220929033509002" style="zoom:400%;" />
 
 > 提交到远程仓库
 
-<img src="https://i0.hdslb.com/bfs/album/13d86de1fdf2168ea747f3c13b1c0ea0925cd616.png" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/13d86de1fdf2168ea747f3c13b1c0ea0925cd616.png" style="zoom:400%;" />
 
 > `Gitte`版
 
@@ -2909,7 +3624,7 @@ public class AdminApplication {
 
 > `GitHub`版
 
-<img src="https://i0.hdslb.com/bfs/album/c6034089a583507bb708b3844de92fe6437543dc.png" alt="image-20220929033920767" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c6034089a583507bb708b3844de92fe6437543dc.png" alt="image-20220929033920767" style="zoom:400%;" />
 
 
 
@@ -2917,11 +3632,11 @@ public class AdminApplication {
 
 > 创建`Config-Center`工程
 
-<img src="https://i0.hdslb.com/bfs/album/bda0352800cf1baf878599100bfc161c58d73b03.png" alt="image-20220929030703019" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/bda0352800cf1baf878599100bfc161c58d73b03.png" alt="image-20220929030703019" style="zoom:400%;" />
 
 >  添加以下依赖
 
-<img src="https://i0.hdslb.com/bfs/album/b91a6f66db5e1f7d689b8674f9e28137030be259.png" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/b91a6f66db5e1f7d689b8674f9e28137030be259.png" style="zoom:400%;" />
 
 > 修改`pom`中`spring-boot.version`和`spring-cloud.version`
 
@@ -3012,7 +3727,7 @@ http://localhost:7777/feign-consumer-dev.yml
 
 > `GitHub`版
 
-<img src="https://i0.hdslb.com/bfs/album/afe22b173f78c98a199afb370d45bfe64b362765.png" alt="image-20220929040738399" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/afe22b173f78c98a199afb370d45bfe64b362765.png" alt="image-20220929040738399" style="zoom:400%;" />
 
 ##### 按分支读取
 
@@ -3022,7 +3737,7 @@ http://localhost:7777/feign-consumer-dev.yml
 
 <img src="https://i0.hdslb.com/bfs/album/f9ab39dbcff133e030820c6e73723718bc991262.png" style="zoom:200%;" />
 
-<img src="https://i0.hdslb.com/bfs/album/5b03ffb00d1cfb1086d596fd79519c4280d5f076.png" alt="image-20220929153440061" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/5b03ffb00d1cfb1086d596fd79519c4280d5f076.png" alt="image-20220929153440061" style="zoom:400%;" />
 
 > 创建完成的话这样我们就有四个分支了，`main`、`dev`、`test`、`uat`
 
@@ -3030,7 +3745,7 @@ http://localhost:7777/feign-consumer-dev.yml
 
 > `GitHub`版
 
-<img src="https://i0.hdslb.com/bfs/album/2e91c67889b1b5a32b66aaeeb68edf66a3a54c0b.png" alt="image-20220929153625881" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/2e91c67889b1b5a32b66aaeeb68edf66a3a54c0b.png" alt="image-20220929153625881" style="zoom:400%;" />
 
 > **分支创建好将每个环境对应的配置文件分别放入对应的分支**
 >
@@ -3055,11 +3770,11 @@ http://localhost:7777/main/feign-consumer-prod.yml
 
 > 有可能会由于网络不好导致下图中`404`问题，多试几次即可，出不来也没关系，就是看个效果，没什么影响
 
-<img src="https://i0.hdslb.com/bfs/album/990214617532e1ef9e0a84029bf1536874b7e8b3.png" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/990214617532e1ef9e0a84029bf1536874b7e8b3.png" style="zoom:400%;" />
 
 > 最后出来就是这个效果了
 
-<img src="https://i0.hdslb.com/bfs/album/1b54962a5fb83c99f9d69f2c46befcd598299dd6.png" alt="image-20220929160311964" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/1b54962a5fb83c99f9d69f2c46befcd598299dd6.png" alt="image-20220929160311964" style="zoom:400%;" />
 
 #### 配置中心客户端应用
 
@@ -3094,7 +3809,7 @@ spring:
       name: feign-consumer
 ```
 
-<img src="https://i0.hdslb.com/bfs/album/c9387dc165a4f328d616a1036aba57f9a59c40f8.png" alt="image-20220929203353939" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/c9387dc165a4f328d616a1036aba57f9a59c40f8.png" alt="image-20220929203353939" style="zoom:400%;" />
 
 > 在`Feign-Consumer`服务的`FeignConsumerController`中添加以下代码
 >
@@ -3117,7 +3832,7 @@ public Object getRemoteConfig() {
 >
 > - 调用`http://localhost:9080/getRemoteConfig`接口
 
-<img src="https://i0.hdslb.com/bfs/album/f8d0250fa7c9e3390bd1719660d3ad114d94f4ce.png" alt="image-20220929204644334" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/f8d0250fa7c9e3390bd1719660d3ad114d94f4ce.png" alt="image-20220929204644334" style="zoom:400%;" />
 
 #### 配置中心高可用
 
@@ -3147,11 +3862,11 @@ spring:
 >
 > 多实例怎么启动还记得吧😳，忘记的[看这里](#idea)
 
-<img src="https://i0.hdslb.com/bfs/album/b8c773e3544b1b15bd2df8aeadb4a3763170f491.png" alt="image-20220929211113312" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/b8c773e3544b1b15bd2df8aeadb4a3763170f491.png" alt="image-20220929211113312" style="zoom:400%;" />
 
 再次调用`http://localhost:9080/getRemoteConfig`接口，依然是可以获取到配置数据的，说明从Eureka获取`Config-Server`服务是成功的
 
-<img src="https://i0.hdslb.com/bfs/album/008ac91a3255512140da83f36d080c47d5dec833.png" alt="image-20220929211640067" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/008ac91a3255512140da83f36d080c47d5dec833.png" alt="image-20220929211640067" style="zoom:400%;" />
 
 #### 配置刷新
 
@@ -3200,7 +3915,7 @@ management:
 
 > 这时候需要重启一下`Feign-Consumer`服务，然后到修改`feign-consumer-dev`配置文件内容并提交到远程仓库
 
-<img src="https://i0.hdslb.com/bfs/album/ef434a25e5ffa7da13128df4f95581152bcba0ca.png" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/ef434a25e5ffa7da13128df4f95581152bcba0ca.png" style="zoom:400%;" />
 
 ###### 单体服务刷新配置
 
@@ -3210,11 +3925,11 @@ management:
 
 > 这是个`POST`请求
 
-<img src="https://i0.hdslb.com/bfs/album/4c74a797f21120e1f541c69c98df093ce9148b2d.png" alt="image-20220929213702230" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/4c74a797f21120e1f541c69c98df093ce9148b2d.png" alt="image-20220929213702230" style="zoom:400%;" />
 
 > 这时再请求`http://localhost:9080/getRemoteConfig`就会发现配置数据刷新成功，变成我们刚才修改的数据了
 
-<img src="https://i0.hdslb.com/bfs/album/94f9c8dadb42838a9bed22a37fc01bf2e822e5d2.png" alt="image-20220929213900586" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/94f9c8dadb42838a9bed22a37fc01bf2e822e5d2.png" alt="image-20220929213900586" style="zoom:400%;" />
 
 ###### 高可用服务刷新配置
 
@@ -3256,7 +3971,7 @@ spring:
 
 > 当添加了`bus`相关依赖后，`http://localhost:9080/actuator/`中会多出一个`http://localhost:9080/actuator/bus-refresh`端点
 
-<img src="https://i0.hdslb.com/bfs/album/a587bc8f9a000084610809b19bdfe6c2af040400.png" alt="image-20220929225015059" style="zoom:800%;" />
+<img src="https://i0.hdslb.com/bfs/album/a587bc8f9a000084610809b19bdfe6c2af040400.png" alt="image-20220929225015059" style="zoom:400%;" />
 
 > 对了，这时在`RabbitMQ`中应该也可以看到自动创建了名为`springCloudBus`的交换机，和用于刷新配置的三个队列
 
@@ -3333,10 +4048,6 @@ management:
 >- 调用`http://localhost:7777/actuator/bus-refresh`端点刷新所有服务器配置
 
 <img src="https://i0.hdslb.com/bfs/album/ded2680e8bc896f774f700d35fa8a56f8760e9f1.gif" alt="20221001_222024" style="zoom:200%;" />
-
-## SpringCloud Alibaba
-
-## SpringCloud Apatch
 
 
 

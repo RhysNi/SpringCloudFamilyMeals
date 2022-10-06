@@ -5,6 +5,8 @@ import com.rhys.feignconsumer.service.TestRestService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -26,7 +28,7 @@ public class FeignConsumerController {
     @Value("${server.port}")
     private String port;
 
-    @Value("${ROSTemplateFormatVersion}")
+    // @Value("${ROSTemplateFormatVersion}")
     private String version;
 
     @GetMapping("/testOpenFeign")
@@ -37,6 +39,21 @@ public class FeignConsumerController {
     @GetMapping("/testOpenFeignWithRest")
     public Object testOpenFeignWithRest() {
         return restService.testOpenFeignWithRest();
+    }
+
+    @GetMapping("/testGateway")
+    public String testGateway() {
+        return "success";
+    }
+
+    @GetMapping("/testQueryPredicate")
+    public String testQueryPredicate(@RequestParam("name") String name) {
+        return name;
+    }
+
+    @PostMapping("/testMethodPredicate")
+    public String testMethodPredicate(@RequestParam("name") String name) {
+        return name+" port:"+port;
     }
 
     @GetMapping("/getRemoteConfig")
